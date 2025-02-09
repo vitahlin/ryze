@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "07d80e1b3398839e",
+        "id": "9f76c09860891e1c",
         "type": "tabs",
         "children": [
           {
-            "id": "f47eb307c20ea584",
+            "id": "c985593a6e24a2c2",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CS/Java/Spring AOP源码解析2-ProxyFactory源码分析.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Spring AOP源码解析2-ProxyFactory源码分析"
+              "title": "新标签页"
             }
           }
         ]
@@ -170,8 +166,9 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "f47eb307c20ea584",
+  "active": "c985593a6e24a2c2",
   "lastOpenFiles": [
+    "CS/Java/Spring AOP源码解析2-ProxyFactory源码分析.md",
     "CS/Java/macOS开发环境搭建.md",
     "CS/Linux/左移位和右移位.md",
     "CS/Linux/typedef详解.md",
