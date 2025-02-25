@@ -2,7 +2,6 @@
 tags: macOS,tools
 ---
 
-
 - /Applications 应用程序目录（如非必须，只要删除本目录的应用即可） 
 - ~/Applications 用户文件夹中的应用程序目录 
 - /Library 库目录（大多数应用会在此目录下建立目录） 
