@@ -26,7 +26,6 @@ maven 也直接通过 sdkman 安装。
 -  SequenceDiagram 方法调的深度，生产时序图
 - String Manipulation 字符串操作，快捷转换大小写
 
-
 ### JRebel
 
 热部署插件，需要激活，需要先激活，激活后可以通过热部署调试。
