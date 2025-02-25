@@ -8,11 +8,9 @@ on:
 jobs:
   notify:
     runs-on: ubuntu-latest
-
     steps:
     - name: Notify sonder update submodule
       run: |
         curl -X POST https://api.github.com/repos/vitahlin/sonder/dispatches \
           -H "Authorization: token ${{ secrets.SONDER_UPDATE_SUBMODULE_TOKEN }}" \
           -d '{"event_type":"update-submodule-ryze"}'
-

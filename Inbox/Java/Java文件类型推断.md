@@ -1,9 +1,4 @@
 
----
-tags: Snippet
----
-
-
 ```java
 public static String detectFileType(InputStream inputStream) {  
     try {  
