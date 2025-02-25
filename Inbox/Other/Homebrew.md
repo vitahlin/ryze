@@ -3,8 +3,6 @@
 
 如果你在核心仓库没有找到你需要的软件，那么你就需要安装第三方的仓库去安装你需要的软件，这时候就可以使用 `tap` 命令。
 
-
-
 # 安装指定版本
 
 首先，需要在Github上fork `[https://github.com/Homebrew/homebrew-core](https://github.com/Homebrew/homebrew-core)`，然后执行：
