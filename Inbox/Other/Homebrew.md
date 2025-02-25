@@ -5,7 +5,6 @@
 
 
 
-
 # 安装指定版本
 
 首先，需要在Github上fork `[https://github.com/Homebrew/homebrew-core](https://github.com/Homebrew/homebrew-core)`，然后执行：
