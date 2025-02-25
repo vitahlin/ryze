@@ -57,7 +57,6 @@ BOM 全称是 Bill Of Materials，译作材料清单。BOM 本身并不是一种
 ```
 
 其中的关键信息是：
-
 - `<packaging>pom</packaging>` 打包方式是 pom 文件
 - `<dependencyManagement><dependencies>` 下定义的各种依赖的版本
 
