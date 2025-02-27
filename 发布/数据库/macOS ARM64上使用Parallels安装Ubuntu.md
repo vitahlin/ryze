@@ -149,7 +149,6 @@ Parallels Guest Tools were installed successfully!
 ![](https://sonder.vitah.me/ryze/f94f4409d7edadd314706396395b2a88.webp)
 
 设置完成后重启虚拟机，就能在 `/media/psf` 目录下看到共享的文件夹：
-
 ```bash
 vitah@ubu2404:~$ cd /media/psf
 vitah@ubu2404:/media/psf$ ls
