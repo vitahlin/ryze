@@ -38,8 +38,8 @@ tags:
 
 **支持M1的Ubuntu镜像**
 
-| 镜像名称 | 下载地址 |
-| --- | --- |
+| 镜像名称                  | 下载地址                                                         |
+| --------------------- | ------------------------------------------------------------ |
 | ubuntu server 22.04.3 | magnet:?xt=urn:btih:931CAE3D8B23994E59EEAA0CEAA1C8CB011F693B |
 | ubuntu server 22.04.5 | magnet:?xt=urn:btih:502D81DF4E4CD216BCE32EB05CC54B5A5359DEE0 |
 | ubuntu server 24.04.1 | magnet:?xt=urn:btih:C8814DCE02E49A455F60002FBABBFE4E4D3F22A9 |
