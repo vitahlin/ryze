@@ -64,7 +64,7 @@ after...
 我们把上述代码中的 `Object result = methodProxy.invoke(target, objects)` 替换成 `Object result = methodProxy.invokeSuper(o, objects)` ，执行结果也是一样。
 
 这里的 `target` 参数表示的是被代理的对象，就是目标对象 `UserService`，`invoke` 相当于执行目标对象的方法。那么 `invokeSuper` 怎么理解？
-之前我们有大概介绍了 Spring 代理的基本原理 [[Spring底层核心原理简单介绍#^6632fb]]，**invokeSuper 相当于调用目标对象的父类的方法。** 
+之前我们在文 Spring 底层核心原理简单介绍中 有大概介绍了 Spring 代理的基本原理，**invokeSuper 相当于调用目标对象的父类的方法。** 
 
 ### CGLIB 实现不同的方法不同的代理
 
@@ -546,5 +546,5 @@ public void setTarget(Object target) {
 }
 ```
 
-介绍完 AOP 的概念和 Spring 中 ProxyFactory 的用法，为了更透彻的了解 ProxyFactory，接下来我们就从源码的角度来分析 Spring 的 AOP 原理，也就是 ProxyFactory 的底层原理。 [[Spring AOP源码解析2-ProxyFactory源码分析]]
+介绍完 AOP 的概念和 Spring 中 ProxyFactory 的用法，为了更透彻的了解 ProxyFactory，接下来我们就从源码的角度来分析 Spring 的 AOP 原理，也就是 ProxyFactory 的底层原理。
 

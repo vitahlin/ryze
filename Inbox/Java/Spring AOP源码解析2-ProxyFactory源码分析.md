@@ -13,7 +13,7 @@ tags:
 
 ## 前言
 
-本文主要介绍 Spring ProxyFactory 的源码，在这之前需要对 Spring AOP 的概念有所了解，参考[[Spring AOP源码解析1-基本概念介绍]]
+本文主要介绍 Spring ProxyFactory 的源码，在这之前需要对 Spring AOP 的概念有所了解。
 
 ## ProxyFactory 的简单使用
 
