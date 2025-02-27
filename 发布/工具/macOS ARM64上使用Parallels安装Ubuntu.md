@@ -93,18 +93,16 @@ Welcome to Ubuntu 22.04.3 LTS (GNU/Linux 5.15.0-107-generic aarch64)
 ### 安装 Parallels Tools
 
 1. 设置源
-
 先关闭虚拟机，然后设置 CD/DVD 的源，把它连接到 ptl-tools-lin-arm.iso，如图：
 ![](https://sonder.vitah.me/ryze/5cf8d0167af0fe4455ced255773841d0.webp)
 
 这个镜像文件的位置在  **/Applications/Parallels Desktop.app/Contents/Resources/Tools/** 目录下，针对不同的主机和CPU选择合适的镜像，其中 `lin` 代表 linux，`arm` 代表支持 arm 芯片的。
 
-2. 调整启动顺序，把CD/DVD调到第一位，接着是硬盘，然后reboot重启虚
+2. 调整启动顺序，把CD/DVD调到第一位，接着是硬盘，然后reboot重启虚拟机
 ![](https://sonder.vitah.me/ryze/1c7c628654342e3a144f8fabe9282d16.webp)
 
 
 3. 重启完成后，进入ubuntu虚拟机，开始挂载目录
-
 ```bash
 cd /media
 
