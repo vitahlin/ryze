@@ -14,7 +14,7 @@ tags:
 
 **Profile** 是 AWS 访问凭证的**命名配置**，默认是 `default`，但可以创建多个。
 
-配置文件存储在：`~/.aws/credentials
+配置文件存储在： `~/.aws/credentials` 
 
 如果不存在就新建文件， 内容如下：
 ```sql
