@@ -12,9 +12,7 @@ categories:
 
 ## 安装JDK
 
-安装 sdkman：
-
-[Installation - SDKMAN! the Software Development Kit Manager](https://sdkman.io/install)
+首先需要安装 sdkman，参考官网教程：[Installation - SDKMAN! the Software Development Kit Manager](https://sdkman.io/install)
 
 
 安装完后使用 sdkman 来安装 jdk：
@@ -55,7 +53,7 @@ unzip rocketmq-all-4.9.5-bin-release.zip
 
 ### 修改运行环境配置
 
-RocketMQ建议的运行环境需要至少12G的内存，这是生产环境比较理想的资源配置。但是，学习阶段，如果你的服务器没有这么大的内存空间，那么就需要做一下调整。进入 `bin` 目录，对其中的 `runserver.sh` 和 `runbroker.sh` 两个脚本进行修改。
+RocketMQ 建议的运行环境需要至少12G的内存，这是生产环境比较理想的资源配置。但是，学习阶段，如果你的服务器没有这么大的内存空间，那么就需要做一下调整。进入 `bin` 目录，对其中的 `runserver.sh` 和 `runbroker.sh` 两个脚本进行修改。
 
 修改 `bin/runserver.sh` ，找到
 
@@ -117,26 +115,22 @@ autoCreateTopicEnable=true
 > 另外，如果服务器配置了多张网卡，比如阿里云，腾讯云这样的云服务器，他们通常有内网网卡和外网网卡两张网卡，那么需要增加配置 `brokerIP1`  属性，指向服务器的外网IP 地址，这样才能确保从其他服务器上访问到 RocketMQ 服务。
 
 如：
-
 ```bash
 brokerIP1=xxx.xxx.xxx.xxx
 autoCreateTopicEnable=true
 ```
 
 broker 不会读取默认的配置文件，需要指定配置文件：
-
 ```bash
 bin/mqbroker -c conf/broker.conf
 ```
 
 命令和 nameserver 类似，启动成功后会看到如下日志：
-
 ```bash
 The broker[iZ2ze87wqglz1vylrsw0m1Z, xxx.xxx.xxx.xxx:10911] boot success. serializeType=JSON and name server is localhost:9876
 ```
 
 注意如果日志内容只有：
-
 ```bash
 The broker[iZ2ze87wqglz1vylrsw0m1Z, xxx.xxx.xxx.xxx:10911] boot success. serializeType=JSON
 ```
@@ -195,16 +189,12 @@ sh bin/mqbroker -m
 ## 测试
 
 执行脚本进行测试：
-
 ```bash
 export NAMESRV_ADDR=localhost:9876
 sh tools.sh org.apache.rocketmq.example.quickstart.Producer
 ```
 
-这个指令会默认往 RocketMQ 中发送1000条消息。在命令行窗口可以看到发送消息的日志。
-
-运行结果如下 
-
+这个指令会默认往 RocketMQ 中发送1000条消息。在命令行窗口可以看到发送消息的日志。运行结果如下 ：
 ```bash
 SendResult [sendStatus=SEND_OK, msgId=7F000001E29F2FF4ACD051AC3BAF0000, offsetMsgId=AC145F4600002A9F0000000000000000, messageQueue=MessageQueue [topic=TopicTest, brokerName=iZ2ze87wqglz1vylrsw0m1Z, queueId=2], queueOffset=0]
 SendResult [sendStatus=SEND_OK, msgId=7F000001E29F2FF4ACD051AC3BF30001, offsetMsgId=AC145F4600002A9F00000000000000BE, messageQueue=MessageQueue [topic=TopicTest, brokerName=iZ2ze87wqglz1vylrsw0m1Z, queueId=3], queueOffset=0]
