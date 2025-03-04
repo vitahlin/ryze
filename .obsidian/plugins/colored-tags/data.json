@@ -1,0 +1,29 @@
+{
+  "palette": {
+    "seed": 0,
+    "selected": "adaptive-soft",
+    "custom": "e12729-f37324-f8cc1b-72b043-007f4e"
+  },
+  "mixColors": true,
+  "transition": true,
+  "accessibility": {
+    "highTextContrast": false
+  },
+  "knownTags": {
+    "MySQL": 1,
+    "Spring": 2,
+    "SourceCode": 3,
+    "macOS": 4,
+    "tools": 5,
+    "网络": 6,
+    "Java": 7,
+    "C": 8,
+    "VirtualMachine": 9,
+    "Terminal": 10,
+    "Redis": 11,
+    "Methodology": 12,
+    "SystemDesign": 13,
+    "RocketMQ": 14
+  },
+  "_version": 3
+}
