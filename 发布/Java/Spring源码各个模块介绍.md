@@ -15,7 +15,6 @@ Spring 中的模块划分如下图所示，除了图中的我们自己新建的�
 
 ![](https://sonder.vitah.me/blog/2024/92cf97608c4b0b1609e9037a0b7d5265.webp)
 
-
 ## 1. framework-bom
 
 通过该模块，可以解决 Spring 中的模块与其他框架整合时产生 jar 包版本的冲突，默认为空实现。

@@ -14,13 +14,11 @@ categories:
 
 首先需要安装 sdkman，参考官网教程：[Installation - SDKMAN! the Software Development Kit Manager](https://sdkman.io/install)
 
-
 安装完后使用 sdkman 来安装 jdk：
 
 ```bash
  sdk install java 8.0.402-zulu
 ```
-
 
 ## 安装4.9.5
 
@@ -83,9 +81,7 @@ JAVA_OPT="${JAVA_OPT} -server -Xms1g -Xmx1g"
 
 **注：生产环境不建议调整**
 
-
 ### 启动nameserver服务
-
 
 显示启动 `bin/mqnamesrv` ，运行结果如下：
 
@@ -112,7 +108,7 @@ autoCreateTopicEnable=true
 
 表示允许 broker 端自动创建新的 Topic.
 
-> 另外，如果服务器配置了多张网卡，比如阿里云，腾讯云这样的云服务器，他们通常有内网网卡和外网网卡两张网卡，那么需要增加配置 `brokerIP1`  属性，指向服务器的外网IP 地址，这样才能确保从其他服务器上访问到 RocketMQ 服务。
+> 另外，如果服务器配置了多张网卡，比如阿里云，腾讯云这样的云服务器，他们通常有内网网卡和外网网卡两张网卡，那么需要增加配置 `brokerIP1` 属性，指向服务器的外网IP 地址，这样才能确保从其他服务器上访问到 RocketMQ 服务。
 
 如：
 ```bash
@@ -185,7 +181,6 @@ sh bin/mqbroker -m
 [1]+  Exit 137                nohup bin/mqbroker
 ```
 
-
 ## 测试
 
 执行脚本进行测试：
@@ -202,13 +197,11 @@ SendResult [sendStatus=SEND_OK, msgId=7F000001E29F2FF4ACD051AC3BF60002, offsetMs
 SendResult [sendStatus=SEND_OK, msgId=7F000001E29F2FF4ACD051AC3C000003, offsetMsgId=AC145F4600002A9F000000000000023A, messageQueue=MessageQueue [topic=TopicTest, brokerName=iZ2ze87wqglz1vylrsw0m1Z, queueId=1], queueOffset=0]
 ```
 
-
 可以启动消费者接收之前发送的消息：
 
 ```bash
 sh tools.sh org.apache.rocketmq.example.quickstart.Consumer
 ```
-
 
 运行结果如下：
 

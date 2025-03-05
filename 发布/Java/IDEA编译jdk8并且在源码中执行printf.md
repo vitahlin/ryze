@@ -16,7 +16,6 @@ desc: 介绍如何调试JDK源码的详细教程，方便我们更好的深入�
 
 ![](https://sonder.vitah.me/2024/7eab377ed657b4f9d6957391f8fcdf65.webp)
 
-
 打开任何一个 JDK8 项目查看 JDK8源码目录，这里 `JDK home path` 即 JDK 的安装目录，跳转到 JDK8 的这个目录路径：`/Users/vitah/.sdkman/candidates/java/8.0.312-tem`。
 
 ```shell
@@ -215,14 +214,11 @@ public class ArrayListTest {
 
 ![](https://sonder.vitah.me/2024/1e3b15d279f2c5d07774191300411489.webp)
 
-
 可以看到，上述图中使用的 jdk 源代码仍然是系统安装的。这里将其切换为当前项目的 jdk 代码。
 
 选择新增 SDK，`JDK home path` 和原来的保持一致，这里配置成 `/Users/vitah/.sdkman/candidates/java/8.0.312-tem`，修改 `Sourcepath`，选择当前项目的 src 目录，这里选择 `/Users/vitah/Downloads/dev/vitah/jarvan/jdk8-analyse/src`：
 
 ![](https://sonder.vitah.me/2024/9308c5c64f29fe5c453cd5c4527f95b6.webp)
-
-
 
 点击 `Apply` 保存，然后修改当前项目的 `sdk` 为 `java8-analyse`，新建测试类 `ArrayListTest` ：
 
@@ -239,7 +235,6 @@ public class ArrayListTest {
 并且修改，`ArrayList` 的构造函数如下图：
 
 ![](https://sonder.vitah.me/2024/d51001e3fb7ad0eaf2c6de75909fe31c.webp)
-
 
 执行输出结果如下：
 

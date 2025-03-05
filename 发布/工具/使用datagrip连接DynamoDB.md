@@ -34,4 +34,4 @@ region = us-east-2
 Host是固定的格式，`dynamodb.{aws-region}.amazonaws.com` ， `aws-region` 是亚马逊AWS的区域，详细配置如下图：
 ![](https://sonder.vitah.me/ryze/9583d5a49d664385fc050e0846b43b4d.webp)
 
-`Profile`  取的是文件 `credentials`  的配置，没配置默认取 `default`。
+`Profile` 取的是文件 `credentials` 的配置，没配置默认取 `default`。
