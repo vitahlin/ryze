@@ -23,8 +23,6 @@ tags:
 我们可以安装 Parallels 提供支持的 Ubuntu 镜像，也可以选择自己下载的镜像，这里我们通过镜像安装：
 ![](https://sonder.vitah.me/ryze/95249c02d0552655b202b6628759d58b.webp)
 
-
-
 下一步后，选择已经下载的iso镜像即可。比如 Ubuntu 22.04 文件为：ubuntu-22.04.4-live-server-amd64.iso，下载地址：[Index of /releases](https://old-releases.ubuntu.com/releases/)
 
 我们下载的这个镜像就是 amd64 的，但是在Parallels进行安装的时候会提示错误：
@@ -96,11 +94,10 @@ Welcome to Ubuntu 22.04.3 LTS (GNU/Linux 5.15.0-107-generic aarch64)
 先关闭虚拟机，然后设置 CD/DVD 的源，把它连接到 ptl-tools-lin-arm.iso，如图：
 ![](https://sonder.vitah.me/ryze/5cf8d0167af0fe4455ced255773841d0.webp)
 
-这个镜像文件的位置在  **/Applications/Parallels Desktop.app/Contents/Resources/Tools/** 目录下，针对不同的主机和CPU选择合适的镜像，其中 `lin` 代表 linux，`arm` 代表支持 arm 芯片的。
+这个镜像文件的位置在 **/Applications/Parallels Desktop.app/Contents/Resources/Tools/** 目录下，针对不同的主机和CPU选择合适的镜像，其中 `lin` 代表 linux，`arm` 代表支持 arm 芯片的。
 
 2. 调整启动顺序，把CD/DVD调到第一位，接着是硬盘，然后reboot重启虚拟机
 ![](https://sonder.vitah.me/ryze/1c7c628654342e3a144f8fabe9282d16.webp)
-
 
 3. 重启完成后，进入ubuntu虚拟机，开始挂载目录
 ```bash

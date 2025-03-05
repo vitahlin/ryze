@@ -27,7 +27,6 @@ struct __attribute__ ((__packed__)) sdshdr8 {
 };
 ```
 
-
 可以通过示例代码来验证：
 ```c
 #include <stdio.h>
