@@ -1,38 +1,45 @@
 ---
-title: MySQL索引优化规则
-<!-- description: 这是一个副标题 -->
-date: 2022-04-10
-slug: 01GTJYEDXV0QJBXKPMWWKQMP66
+title: MySQL 索引优化规则
+date: 2025-03-06
+slug: mysql-index-optimization-rules
 categories:
-    - MySQL
-
+  - Database
 tags:
-    - MySQL
+  - MySQL
+desc: MySQL 索引是数据库查询优化的关键，合理的索引设计可以显著提高查询性能。本篇博客将介绍 MySQL 索引的优化规则，包括索引类型、最佳实践、常见误区以及如何使用 EXPLAIN 进行优化分析，帮助你构建高效的数据库查询方案。
+featuredImage: https://sonder.vitah.me/featured/66ce95748a56ffdf2c755970ea6574c4.webp
 ---
 
 ## 示例表
 
 ```sql
 DROP TABLE IF EXISTS employees;
-CREATE TABLE `employees`
-(
-    `id`        int(11)     NOT NULL AUTO_INCREMENT,
-    `name`      varchar(24) NOT NULL DEFAULT '' COMMENT '姓名',
-    `age`       int(11)     NOT NULL DEFAULT '0' COMMENT '年龄',
-    `position`  varchar(20) NOT NULL DEFAULT '' COMMENT '职位',
-    `hire_time` timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '入职时间',
+
+CREATE TABLE
+  `employees` (
+    `id` int (11) NOT NULL AUTO_INCREMENT,
+    `name` varchar(24) NOT NULL DEFAULT '' COMMENT '姓名',
+    `age` int (11) NOT NULL DEFAULT '0' COMMENT '年龄',
+    `position` varchar(20) NOT NULL DEFAULT '' COMMENT '职位',
+    `hire_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '入职时间',
     PRIMARY KEY (`id`),
     KEY `idx_name_age_position` (`name`, `age`, `position`) USING BTREE
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 4
-  DEFAULT CHARSET = utf8 COMMENT ='员工记录表';
+  ) ENGINE = InnoDB AUTO_INCREMENT = 4 DEFAULT CHARSET = utf8 COMMENT = '员工记录表';
 
-INSERT INTO employees(name, age, position, hire_time)
-VALUES ('LiLei', 22, 'manager', NOW());
-INSERT INTO employees(name, age, position, hire_time)
-VALUES ('HanMeimei', 23, 'dev', NOW());
-INSERT INTO employees(name, age, position, hire_time)
-VALUES ('Lucy', 23, 'dev', NOW());
+INSERT INTO
+  employees (name, age, position, hire_time)
+VALUES
+  ('LiLei', 22, 'manager', NOW ());
+
+INSERT INTO
+  employees (name, age, position, hire_time)
+VALUES
+  ('HanMeimei', 23, 'dev', NOW ());
+
+INSERT INTO
+  employees (name, age, position, hire_time)
+VALUES
+  ('Lucy', 23, 'dev', NOW ());
 ```
 
 ## 索引优化规则
@@ -50,22 +57,20 @@ EXPLAIN SELECT * FROM employees WHERE left(name, 3) = 'LiLei';
 ```
 
 ```json
-[
-  {
-    "id": 1,
-    "select_type": "SIMPLE",
-    "table": "employees",
-    "partitions": null,
-    "type": "ALL",
-    "possible_keys": null,
-    "key": null,
-    "key_len": null,
-    "ref": null,
-    "rows": 99909,
-    "filtered": 100,
-    "Extra": "Using where"
-  }
-]
+{
+  "id": 1,
+  "select_type": "SIMPLE",
+  "table": "employees",
+  "partitions": null,
+  "type": "ALL",
+  "possible_keys": null,
+  "key": null,
+  "key_len": null,
+  "ref": null,
+  "rows": 99909,
+  "filtered": 100,
+  "Extra": "Using where"
+}
 ```
 
 ### 3. 存储引擎不能使用索引中范围条件右边的列
@@ -73,61 +78,53 @@ EXPLAIN SELECT * FROM employees WHERE left(name, 3) = 'LiLei';
 #### 走索引示例
 
 ```sql
-EXPLAIN
-SELECT *
-FROM employees
+EXPLAIN SELECT * FROM employees
 WHERE name = 'LiLei'
   AND age = 22
   AND position = 'manager';
 ```
 
 ```json
-[
-  {
-    "id": 1,
-    "select_type": "SIMPLE",
-    "table": "employees",
-    "partitions": null,
-    "type": "ref",
-    "possible_keys": "idx_name_age_position",
-    "key": "idx_name_age_position",
-    "key_len": "140",
-    "ref": "const,const,const",
-    "rows": 1,
-    "filtered": 100,
-    "Extra": null
-  }
-]
+{
+  "id": 1,
+  "select_type": "SIMPLE",
+  "table": "employees",
+  "partitions": null,
+  "type": "ref",
+  "possible_keys": "idx_name_age_position",
+  "key": "idx_name_age_position",
+  "key_len": "140",
+  "ref": "const,const,const",
+  "rows": 1,
+  "filtered": 100,
+  "Extra": null
+}
 ```
 
 #### 不走索引示例
 
 ```sql
-EXPLAIN
-SELECT *
-FROM employees
+EXPLAIN SELECT * FROM employees
 WHERE name = 'LiLei'
   AND age > 22
   AND position = 'manager';
 ```
 
 ```json
-[
-  {
-    "id": 1,
-    "select_type": "SIMPLE",
-    "table": "employees",
-    "partitions": null,
-    "type": "range",
-    "possible_keys": "idx_name_age_position",
-    "key": "idx_name_age_position",
-    "key_len": "78",
-    "ref": null,
-    "rows": 1,
-    "filtered": 10,
-    "Extra": "Using index condition"
-  }
-]
+{
+  "id": 1,
+  "select_type": "SIMPLE",
+  "table": "employees",
+  "partitions": null,
+  "type": "range",
+  "possible_keys": "idx_name_age_position",
+  "key": "idx_name_age_position",
+  "key_len": "78",
+  "ref": null,
+  "rows": 1,
+  "filtered": 10,
+  "Extra": "Using index condition"
+}
 ```
 
 ### 4. 尽量使用覆盖索引，减少 select *
@@ -135,8 +132,7 @@ WHERE name = 'LiLei'
 #### 覆盖索引示例
 
 ```sql
-EXPLAIN
-SELECT name, age
+EXPLAIN SELECT name, age
 FROM employees
 WHERE name = 'LiLei'
   AND age = 23
@@ -144,22 +140,20 @@ WHERE name = 'LiLei'
 ```
 
 ```json
-[
-  {
-    "id": 1,
-    "select_type": "SIMPLE",
-    "table": "employees",
-    "partitions": null,
-    "type": "ref",
-    "possible_keys": "idx_name_age_position",
-    "key": "idx_name_age_position",
-    "key_len": "140",
-    "ref": "const,const,const",
-    "rows": 1,
-    "filtered": 100,
-    "Extra": "Using index"
-  }
-]
+{
+  "id": 1,
+  "select_type": "SIMPLE",
+  "table": "employees",
+  "partitions": null,
+  "type": "ref",
+  "possible_keys": "idx_name_age_position",
+  "key": "idx_name_age_position",
+  "key_len": "140",
+  "ref": "const,const,const",
+  "rows": 1,
+  "filtered": 100,
+  "Extra": "Using index"
+}
 ```
 
 #### 非覆盖索引 select *
@@ -174,22 +168,20 @@ WHERE name = 'LiLei'
 ```
 
 ```json
-[
-  {
-    "id": 1,
-    "select_type": "SIMPLE",
-    "table": "employees",
-    "partitions": null,
-    "type": "ref",
-    "possible_keys": "idx_name_age_position",
-    "key": "idx_name_age_position",
-    "key_len": "140",
-    "ref": "const,const,const",
-    "rows": 1,
-    "filtered": 100,
-    "Extra": null
-  }
-]
+{
+  "id": 1,
+  "select_type": "SIMPLE",
+  "table": "employees",
+  "partitions": null,
+  "type": "ref",
+  "possible_keys": "idx_name_age_position",
+  "key": "idx_name_age_position",
+  "key_len": "140",
+  "ref": "const,const,const",
+  "rows": 1,
+  "filtered": 100,
+  "Extra": null
+}
 ```
 
 ### 5. 使用!=, <>, not in, not exist 的时候不会用到索引
@@ -204,78 +196,69 @@ WHERE name != 'LiLei';
 ```
 
 ```json
-[
-  {
-    "id": 1,
-    "select_type": "SIMPLE",
-    "table": "employees",
-    "partitions": null,
-    "type": "ALL",
-    "possible_keys": "idx_name_age_position",
-    "key": null,
-    "key_len": null,
-    "ref": null,
-    "rows": 99909,
-    "filtered": 50,
-    "Extra": "Using where"
-  }
-]
+{
+  "id": 1,
+  "select_type": "SIMPLE",
+  "table": "employees",
+  "partitions": null,
+  "type": "ALL",
+  "possible_keys": "idx_name_age_position",
+  "key": null,
+  "key_len": null,
+  "ref": null,
+  "rows": 99909,
+  "filtered": 50,
+  "Extra": "Using where"
+}
 ```
 
 ### 6. Is null, is not null 一般情况下也无法用到索引
 
 ```sql
-EXPLAIN
-SELECT *
+EXPLAIN SELECT *
 FROM employees
 WHERE name IS NULL
 ```
 
 ```json
-[
-  {
-    "id": 1,
-    "select_type": "SIMPLE",
-    "table": null,
-    "partitions": null,
-    "type": null,
-    "possible_keys": null,
-    "key": null,
-    "key_len": null,
-    "ref": null,
-    "rows": null,
-    "filtered": null,
-    "Extra": "Impossible WHERE"
-  }
-]
+{
+  "id": 1,
+  "select_type": "SIMPLE",
+  "table": null,
+  "partitions": null,
+  "type": null,
+  "possible_keys": null,
+  "key": null,
+  "key_len": null,
+  "ref": null,
+  "rows": null,
+  "filtered": null,
+  "Extra": "Impossible WHERE"
+}
 ```
 
 ### 7. Like 以通配符开头 ('$abc...')索引会失效
 
 ```sql
-EXPLAIN
-SELECT *
-FROM employees
+EXPLAIN SELECT * FROM employees
 WHERE name LIKE '%Lei'
 ```
 
 ```json
-[
-  {
-    "id": 1,
-    "select_type": "SIMPLE",
-    "table": "employees",
-    "partitions": null,
-    "type": "ALL",
-    "possible_keys": null,
-    "key": null,
-    "key_len": null,
-    "ref": null,
-    "rows": 99909,
-    "filtered": 11.11,
-    "Extra": "Using where"
-  }
-]
+{
+  "id": 1,
+  "select_type": "SIMPLE",
+  "table": "employees",
+  "partitions": null,
+  "type": "ALL",
+  "possible_keys": null,
+  "key": null,
+  "key_len": null,
+  "ref": null,
+  "rows": 99909,
+  "filtered": 11.11,
+  "Extra": "Using where"
+}
 ```
 
 #### 如何解决 `like '%abc%'` 索引失效问题？
@@ -285,29 +268,26 @@ WHERE name LIKE '%Lei'
 使用覆盖索引，查询字段必须是建立覆盖索引字段，例如
 
 ```sql
-EXPLAIN
-SELECT name, age, position
+EXPLAIN SELECT name, age, position
 FROM employees
 WHERE name LIKE '%lei%';
 ```
 
 ```json
-[
-  {
-    "id": 1,
-    "select_type": "SIMPLE",
-    "table": "employees",
-    "partitions": null,
-    "type": "index",
-    "possible_keys": null,
-    "key": "idx_name_age_position",
-    "key_len": "140",
-    "ref": null,
-    "rows": 99909,
-    "filtered": 11.11,
-    "Extra": "Using where; Using index"
-  }
-]
+{
+  "id": 1,
+  "select_type": "SIMPLE",
+  "table": "employees",
+  "partitions": null,
+  "type": "index",
+  "possible_keys": null,
+  "key": "idx_name_age_position",
+  "key_len": "140",
+  "ref": null,
+  "rows": 99909,
+  "filtered": 11.11,
+  "Extra": "Using where; Using index"
+}
 ```
 
 ##### 搜索引擎
@@ -317,29 +297,24 @@ WHERE name LIKE '%lei%';
 ### 8. 字符串不加单引号会导致索引失效
 
 ```sql
-EXPLAIN
-SELECT *
-FROM employees
-WHERE name = 1000;
+EXPLAIN SELECT * FROM employees WHERE name = 1000;
 ```
 
 ```json
-[
-  {
-    "id": 1,
-    "select_type": "SIMPLE",
-    "table": "employees",
-    "partitions": null,
-    "type": "ALL",
-    "possible_keys": "idx_name_age_position",
-    "key": null,
-    "key_len": null,
-    "ref": null,
-    "rows": 99909,
-    "filtered": 10,
-    "Extra": "Using where"
-  }
-]
+{
+  "id": 1,
+  "select_type": "SIMPLE",
+  "table": "employees",
+  "partitions": null,
+  "type": "ALL",
+  "possible_keys": "idx_name_age_position",
+  "key": null,
+  "key_len": null,
+  "ref": null,
+  "rows": 99909,
+  "filtered": 10,
+  "Extra": "Using where"
+}
 ```
 
 这其实是类型转换的问题
@@ -349,30 +324,26 @@ WHERE name = 1000;
 少用 or 或 in，用它查询时，mysql**不一定使用索引**，mysql 内部优化器会根据检索比例、表大小等多个因素整体评估是否使用索引。例如：
 
 ```sql
-EXPLAIN
-SELECT *
-FROM employees
+EXPLAIN SELECT * FROM employees
 WHERE name = 'LiLei'
    OR name = 'HanMeimei';
 ```
 
 ```json
-[
-  {
-    "id": 1,
-    "select_type": "SIMPLE",
-    "table": "employees",
-    "partitions": null,
-    "type": "ALL",
-    "possible_keys": "idx_name_age_position",
-    "key": null,
-    "key_len": null,
-    "ref": null,
-    "rows": 3,
-    "filtered": 66.67,
-    "Extra": "Using where"
-  }
-]
+{
+  "id": 1,
+  "select_type": "SIMPLE",
+  "table": "employees",
+  "partitions": null,
+  "type": "ALL",
+  "possible_keys": "idx_name_age_position",
+  "key": null,
+  "key_len": null,
+  "ref": null,
+  "rows": 3,
+  "filtered": 66.67,
+  "Extra": "Using where"
+}
 ```
 
 ### 10. 范围查询
@@ -387,30 +358,27 @@ ALTER TABLE `employees`
 ```
 
 ```sql
-EXPLAIN
-SELECT *
+EXPLAIN SELECT *
 FROM employees
 WHERE age >= 1
   AND age <= 2000;
 ```
 
 ```json
-[
-  {
-    "id": 1,
-    "select_type": "SIMPLE",
-    "table": "employees",
-    "partitions": null,
-    "type": "ALL",
-    "possible_keys": null,
-    "key": null,
-    "key_len": null,
-    "ref": null,
-    "rows": 99909,
-    "filtered": 11.11,
-    "Extra": "Using where"
-  }
-]
+{
+  "id": 1,
+  "select_type": "SIMPLE",
+  "table": "employees",
+  "partitions": null,
+  "type": "ALL",
+  "possible_keys": null,
+  "key": null,
+  "key_len": null,
+  "ref": null,
+  "rows": 99909,
+  "filtered": 11.11,
+  "Extra": "Using where"
+}
 ```
 
 **没走索引原因：mysql 内部优化器会根据检索比例、表大小等多个因素整体评估是否使用索引。比如这个例子，可能是由于单次数据量查询过大导致优化器最终选择不走索引。**
@@ -420,30 +388,27 @@ WHERE age >= 1
 优化方法：将大的范围拆分成多个小范围。
 
 ```sql
-EXPLAIN
-SELECT *
+EXPLAIN SELECT *
 FROM employees
 WHERE age >= 1001
   AND age <= 2000;
 ```
 
 ```json
-[
-  {
-    "id": 1,
-    "select_type": "SIMPLE",
-    "table": "employees",
-    "partitions": null,
-    "type": "range",
-    "possible_keys": "idx_age",
-    "key": "idx_age",
-    "key_len": "4",
-    "ref": null,
-    "rows": 1000,
-    "filtered": 100,
-    "Extra": "Using index condition"
-  }
-]
+{
+  "id": 1,
+  "select_type": "SIMPLE",
+  "table": "employees",
+  "partitions": null,
+  "type": "range",
+  "possible_keys": "idx_age",
+  "key": "idx_age",
+  "key_len": "4",
+  "ref": null,
+  "rows": 1000,
+  "filtered": 100,
+  "Extra": "Using index condition"
+}
 ```
 
 ### 11. 不要在小基数字段上建立索引
