@@ -34,7 +34,6 @@ brew tap beeftornado/rmtree
 brew rmtree xxx
 brew cleanup
 ```
-  
 
 # 解决Cask下载太慢的问题
 

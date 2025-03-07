@@ -201,7 +201,6 @@ Transmission Control Protocol, Src Port: 51567 (51567), Dst Port: sd (9876), Seq
 
 > 客户端对服务器发起连接，发送SYN=1，以及Seq_Num=X
 
-
 #### 第二次握手
 
 同样选择**序号2**，然后查看TCP报文内容。
@@ -214,7 +213,6 @@ Transmission Control Protocol, Src Port: 51567 (51567), Dst Port: sd (9876), Seq
 
 > 服务器发送数据给客户端，发送SYN=1，ACK=1，并且收到从客户端传来的Seq_Num=X，发送Ack_Num=X+1用于确认，并且发送自身的Seq_Num=Y
 
-
 #### 第三次握手
 
 - Source Port 51576
@@ -225,18 +223,14 @@ Transmission Control Protocol, Src Port: 51567 (51567), Dst Port: sd (9876), Seq
 
 > 客户端发送数据到服务器，发送ACK=1，收到从服务器传来的Seq_Num=Y，发送Ack_Num=Y+1确认，发送自身的当前顺序号码，第一次握手顺序号码是X，所以这一次的顺序号码Seq Num=X+1
 
-
 序号为4的内容为`TCP Window Update`，这个用于窗口更新，这里不做赘述。
 序号为5的内容如图：
 ![image.png](https://vitahlin.oss-cn-shanghai.aliyuncs.com/images/blog/2022/07/202212151945193.png)
-
 
 可以看到，序号5中服务器对客户端发送了数据，数据内容是当时的服务器时间，这里开始就是TCP互相传输内容的部分。
 
 可以用一张图来表现TCP三次握手的过程：
 ![image.png](https://vitahlin.oss-cn-shanghai.aliyuncs.com/images/blog/2022/07/202212151945712.png)
-
-
 
 ### TCP为什么是三次握手
 
