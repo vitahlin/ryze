@@ -4,7 +4,6 @@ tags:
   - SourceCode
 ---
 
-
 ## 关注问题
 
 1. ProxyFactory 如何选择 JDK 或 CGLIB；
@@ -91,9 +90,9 @@ protected final synchronized AopProxy createAopProxy() {
 
 主要关注方法 `getAopProxyFactory` 和 `createAopProxy`。还是通过方法名先猜一下这两个方法的含义，`getAopProxyFactory` 是获取一个 `AopProxy` 工厂，`createAopProxy` 是通过工厂创建 `AopProxy` 实例。这样的逻辑也符合当前方法需要创建 `AopProxy` 的目的。
 
-先来看方法 `getAopProxyFactory`  的实现。这个方法直接返回了当前实例持有的 ` AopProxyFactory ` 对象，那么这个对象在哪里创建的呢？就在当前类的构造方法中实例化。在构造方法中，创建了一个 `DefaultAopProxyFactory` 对象，这个类在上文将 `AopProxy` 的时候提到过，`DefaultAopProxyFactory`  是 ` AopProxyFactory ` 接口的唯一实现。
+先来看方法 `getAopProxyFactory` 的实现。这个方法直接返回了当前实例持有的 ` AopProxyFactory ` 对象，那么这个对象在哪里创建的呢？就在当前类的构造方法中实例化。在构造方法中，创建了一个 `DefaultAopProxyFactory` 对象，这个类在上文将 `AopProxy` 的时候提到过，`DefaultAopProxyFactory` 是 ` AopProxyFactory ` 接口的唯一实现。
 
-跟进 `DefaultAopProxyFactory`  的方法里面，Spring 在这里面就会判断到底是用 CGLIB 还是 JDK 实现动态代理： 
+跟进 `DefaultAopProxyFactory` 的方法里面，Spring 在这里面就会判断到底是用 CGLIB 还是 JDK 实现动态代理： 
 ```java
 @Override  
 public AopProxy createAopProxy(AdvisedSupport config) throws AopConfigException {  
@@ -116,19 +115,18 @@ public AopProxy createAopProxy(AdvisedSupport config) throws AopConfigException 
 
 `NativeDetector.inNativeImage` 这个会判断当前 Spring 运行的 JVM，如果是运行在 GraalVM，那就直接用 JDK 动态代理，如果不是则继续判断其他条件。
 
-接下来是判断 config 某些属性，那么这个 config  是什么？在 createAopProxy 方法中可以看到，传入的参数是 this，其实就是我们自己 new 出来的 ProxyFactory，ProxyFactory 这个类继承了 ProxyConfig 类。
+接下来是判断 config 某些属性，那么这个 config 是什么？在 createAopProxy 方法中可以看到，传入的参数是 this，其实就是我们自己 new 出来的 ProxyFactory，ProxyFactory 这个类继承了 ProxyConfig 类。
 
 我们的 ProxyFactory 可以设置一些属性，比如 optimize。在以前的版本中，大部分情况下 CGLIB 的效率会比 JDK 的高一点，如果想提高效率，就可以设置 `optimize=true`，这样它就会选择 CGLIB 来进行动态代理。
 
 `config.isProxyTargetClass` 判断被代理的是不是类，**因为 JDK 只能代理接口**。Spring 的注解 `@EnableAspectJAutoProxy` 中的 proxyTargetClass 其实就是设置这个属性，它的默认值是 false，如果设为 true，那么就会直接使用 CGLIB，不关心代理类是否实现了接口。
 
-如果前面两者都是 false，那么就判断 `hasNoUserSuppliedProxyInterfaces` ，这个方法是判断 proxyFactory  有没有调用 addInterface 。
+如果前面两者都是 false，那么就判断 `hasNoUserSuppliedProxyInterfaces` ，这个方法是判断 proxyFactory 有没有调用 addInterface 。
 如果有就返回 false 使用 JDK，如果没有添加接口返回 true 就使用 CGLIB。这里的有没有添加接口并不是说 UserService 是否有实现接口，这里判断的是是否有调用 `proxyFactory.addInterface()`。
 
 这段代码就是 Spring 判断需要通过什么方式来创建代理对象，在这里需要对 JDK 动态代理和 CGLIB 有一定的了解，例如动态代理要求必须有接口才可以进行代理，是通过实现父接口的方式创建代理的；CGLIB 是通过生成目标类型的子类进行代理的，那么这个目标类型必须不能是 final 的（final 类不能继承），而且已经 CGLIB 代理过一次的类型不能再次进行代理（因为 CGLIB 在代理时会生成一些特殊的方法，如果重复代理会导致方法冲突）。
 
 到此为止，我们已经分析完了 `ProxyCreatorSupport#createAopProxy` 方法，已经得到了适合当前目标类型的 AopProxy。接下来便是分析 `AopProxy#getProxy`，由于 AopProxy 有两个实现类，分别是 JdkDynamicAopProxy 和 ObjenesisCglibAopProxy，我们分别看一下这两个类的 getProxy 代码。
-
 
 ## JdkDynamicAopProxy -JDK 动态代理
 
@@ -155,7 +153,7 @@ public Object getProxy() {
 
 ### JdkDynamicAopProxy#invoke
 
-直接来看 `JdkDynamicAopProxy#invoke`  源码：
+直接来看 `JdkDynamicAopProxy#invoke` 源码：
 ```Java
     @Override
     @Nullable
@@ -277,7 +275,6 @@ public Object getProxy() {
 该方法被回调时传入的三个参数分别是：被调用的代理对象、被调用的方法、调用参数列表。整体流程还是比较简单的，参考上述的注释即可，这里就不细讲了。这里主要关注 2 个方法，分别是
 1.  `AdvisedSupport#getInterceptorsAndDynamicInterceptionAdvice` ，我们可能会定义多个 Advisor 或者 Advice，这个方法就是进行筛选符合这个类的 Advice 列表；如果没有符合的 Advice 列表，就调用 `invokeJoinpointUsingReflection` 执行普通的方法。
 2. `ReflectiveMethodInvocation#proceed`
-
 
 ### getInterceptorsAndDynamicInterceptionAdvice-获取 Interceptor 列表
 
@@ -401,7 +398,7 @@ proxyFactory.addAdvice(new MethodInterceptor() {
 });
 ```
 
-实际上，proxyFactory 在调用 `addAdvice`  方法的时候会进行转化，我们直接来看 `addAdvice`  方法的源码 ` AdvisedSupport#addAdvice` ：
+实际上，proxyFactory 在调用 `addAdvice` 方法的时候会进行转化，我们直接来看 `addAdvice` 方法的源码 ` AdvisedSupport#addAdvice` ：
 ```Java
     @Override
     public void addAdvice(Advice advice) throws AopConfigException {
@@ -432,7 +429,7 @@ proxyFactory.addAdvice(new MethodInterceptor() {
 
 ##### ClassFilter 和 MethodMatcher 的筛选
 
-依次会判断 `Advisor`  的 `ClassFilter` 和 `MethodMatcher`  是否符合条件，实际上一个完整体的 `Advisor`  长这样：
+依次会判断 `Advisor` 的 `ClassFilter` 和 `MethodMatcher` 是否符合条件，实际上一个完整体的 `Advisor` 长这样：
 ```Java
 public class MyPointcutAdvisor implements PointcutAdvisor {
     @Override
@@ -484,10 +481,9 @@ public class MyPointcutAdvisor implements PointcutAdvisor {
 
 ```
 
-我们可以在 `ClassFilter` 和 `MethodMatcher` 定义筛选的逻辑，Spring 筛选 `Advisor`  的时候就会判断当前这个方法符合不符合筛选的逻辑。
+我们可以在 `ClassFilter` 和 `MethodMatcher` 定义筛选的逻辑，Spring 筛选 `Advisor` 的时候就会判断当前这个方法符合不符合筛选的逻辑。
 
-上述中还有一个 `isRuntime`  的判断，这个是判断当前是不是运行时，即不止判断 ` ClassFilter `  和 ` MethodMatcher ` ，如果是运行时还会判断 ` matches(Method method, Class<?> targetClass, Object... args)` 这个方法来进行当前运行参数的筛选。
-
+上述中还有一个 `isRuntime` 的判断，这个是判断当前是不是运行时，即不止判断 ` ClassFilter ` 和 ` MethodMatcher ` ，如果是运行时还会判断 ` matches(Method method, Class<?> targetClass, Object... args)` 这个方法来进行当前运行参数的筛选。
 
 ##### 将 Advisor 转换为 MethodInterceptor
 
@@ -495,7 +491,6 @@ public class MyPointcutAdvisor implements PointcutAdvisor {
 ```Java
 MethodInterceptor[] interceptors = registry.getInterceptors(advisor);
 ```
-
 
 在看具体代码之前，先看一下 `AdvisorAdapterRegistry` 是用来干什么的，源码文档中对其的描述只有一句话：
 > Interface for registries of Advisor adapters.
@@ -530,8 +525,6 @@ MethodInterceptor[] interceptors = registry.getInterceptors(advisor);
     }
 ```
 
-
-
 先来看 AdvisorAdapter 接口的源码：
 ```Java
 public interface AdvisorAdapter {
@@ -558,7 +551,6 @@ AdvisorAdapter 接口的实现类有 4 个：
         registerAdvisorAdapter(new ThrowsAdviceAdapter());
     }
 ```
-
 
 ##### MethodBeforeAdviceAdapter 源码
 
@@ -601,20 +593,20 @@ public class MethodBeforeAdviceInterceptor implements MethodInterceptor, BeforeA
 }
 ```
 
-**关注其中的 invoke 方法，`this.advice.before` 就会先执行 `MethodBeforeAdvice`  的 `before`  方法，` mi.proceed ` 再执行代理的方法。**
+**关注其中的 invoke 方法，`this.advice.before` 就会先执行 `MethodBeforeAdvice` 的 `before` 方法，` mi.proceed ` 再执行代理的方法。**
 
 所以，这里不管是 Advice 还是 Advisor，最终都会被处理成对应的 `MethodInterceptor` 列表。
 
 ### 执行 MethodInterceptor 列表
 
-上述中，我们已经得到了当前的 MethodInterceptor 列表，那接下来肯定就是执行了。继续来看  `JdkDynamicAopProxy #invoke` 中的执行逻辑：
+上述中，我们已经得到了当前的 MethodInterceptor 列表，那接下来肯定就是执行了。继续来看 `JdkDynamicAopProxy #invoke` 中的执行逻辑：
 ```Java
 MethodInvocation invocation = new ReflectiveMethodInvocation(proxy, target, method, args, targetClass, chain);  
 /*** proceed就是执行方法 */  
 retVal = invocation.proceed();
 ```
 
-一开始会调用 `ReflectiveMethodInvocation`  的构造函数，继续看 proceed 的具体逻辑 ` ReflectiveMethodInvocation#proceed `：
+一开始会调用 `ReflectiveMethodInvocation` 的构造函数，继续看 proceed 的具体逻辑 ` ReflectiveMethodInvocation#proceed `：
 ```Java
  @Nullable
     public Object proceed() throws Throwable {
@@ -665,7 +657,6 @@ if (this.currentInterceptorIndex == this.interceptorsAndDynamicMethodMatchers.si
     return invokeJoinpoint();
 }
 ```
-
 
 这就是整个 JDK 执行动态代理的流程。
 
@@ -862,4 +853,4 @@ if (this.currentInterceptorIndex == this.interceptorsAndDynamicMethodMatchers.si
         }
 ```
 
-是不是非常眼熟？这就是前面提到过的，通过 CGLib 进行增强时，核心代码与 JDK 动态代理是非常类似的，而 `CglibMethodInvocation` 就是我们之前提到过的 `ReflectiveMethodInvocation`  类的子类，其执行逻辑几乎是一致的，在这里就不重复讲了。
+是不是非常眼熟？这就是前面提到过的，通过 CGLib 进行增强时，核心代码与 JDK 动态代理是非常类似的，而 `CglibMethodInvocation` 就是我们之前提到过的 `ReflectiveMethodInvocation` 类的子类，其执行逻辑几乎是一致的，在这里就不重复讲了。

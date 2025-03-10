@@ -1234,11 +1234,11 @@ FROM information_schema.optimizer_trace;
 }
 ```
 
-可以看到这里的，sort_mode 值为<sort_key, rowid>，这里已经变为双路排序。
+可以看到这里的，`sort_mode` 值为 `<sort_key, rowid>`，这里已经变为双路排序。
 
 双路排序过程
 
-1. 从索引 name 找到第一个满足条件 name='lilei' 的主键 ID
+1. 从索引 name 找到第一个满足条件 `name='lilei'` 的主键 ID
 2. 根据主键 ID 取出整行，把排序字段 position 和主键 ID 这两个字段放到 sort_buffer 中
 3. 从索引 name 找到下一个满足条件的主键 ID
 4. 重复 2，3 步骤知道条件不满足 name='lilei'

@@ -29,7 +29,7 @@ public class UserService {
 
 此时，我们 `new` 一个 `UserService` 对象，然后执行 `test()` 方法，结果是显而易见的。
 
-如果我们现在想在 **不修改 UserService 类的源码** 前提下，给 `test()` 方法增加额外逻辑，就可以使用动态代理机制来创建 `UserService`  对象了，比如：
+如果我们现在想在 **不修改 UserService 类的源码** 前提下，给 `test()` 方法增加额外逻辑，就可以使用动态代理机制来创建 `UserService` 对象了，比如：
 ```java
 UserService target = new UserService();  
   
@@ -59,7 +59,7 @@ before...
 test...
 after...
 ```
-得到的都是 UserService 对象，但是执行 `test()`  方法时的效果却不一样了，这就是代理所带来的效果。
+得到的都是 UserService 对象，但是执行 `test()` 方法时的效果却不一样了，这就是代理所带来的效果。
 
 我们把上述代码中的 `Object result = methodProxy.invoke(target, objects)` 替换成 `Object result = methodProxy.invokeSuper(o, objects)` ，执行结果也是一样。
 
@@ -113,14 +113,13 @@ userService.test();
 userService.a();
 ```
 
-上述代码中，和原先不一样的是 `CallBack[]` 这个数组里面有两个代理，` NoOp.INSTANCE `  表示一个空的代理，啥也不执行。
+上述代码中，和原先不一样的是 `CallBack[]` 这个数组里面有两个代理，` NoOp.INSTANCE ` 表示一个空的代理，啥也不执行。
 
 `CallbackFilter` 是代理过滤器，返回的数字表示执行的是 `Callback` 数组中的哪个代理。
 
-
 ### JDK 动态代理
 
-除了  CGLIB，JDK 本身也提供了一种创建代理对象的动态代理机制，但是它只能代理接口，也就是 UserService 得先有一个接口才能利用 JDK 动态代理机制来生成一个代理对象，比如：
+除了 CGLIB，JDK 本身也提供了一种创建代理对象的动态代理机制，但是它只能代理接口，也就是 UserService 得先有一个接口才能利用 JDK 动态代理机制来生成一个代理对象，比如：
 ```java
 public interface UserInterface {
 	public void test();
@@ -177,7 +176,6 @@ userService.test();
 通过 `ProxyFactory`，我们可以不再关系到底是用 CGLIB 还是 JDK 动态代理了，`ProxyFactory` 会帮我们去判断。如果 `UserService` 实现了接口，那么 `ProxyFactory` 底层就会用 jdk 动态代理；如果没有实现接口，就会用 CGLIB 技术。
 上面的代码，就是由于 `UserService` 实现了 `UserInterface` 接口，所以最后产生的代理对象是 `UserInterface` 类型。
 
-
 ### Advice 方法
 
 上述代码中，我们 new 了一个 `Advice` 来执行，实际上我们可以定义多种 `Advice` 类型。
@@ -215,8 +213,7 @@ public class MyThrowAdvice implements ThrowsAdvice {
     }  
 }
 ```
-这里捕获的是空指针异常，我们也可以捕获其他异常，把 `NullPointerException`  换成其他异常即可。
-
+这里捕获的是空指针异常，我们也可以捕获其他异常，把 `NullPointerException` 换成其他异常即可。
 
 #### 自定义执行顺序
 
@@ -259,7 +256,7 @@ test...
 方法执行Around后
 ```
 
-其中**执行的链路顺序是和方法  `addAdvice`  的添加顺序一致。**
+其中**执行的链路顺序是和方法 `addAdvice` 的添加顺序一致。**
 
 ### Advisor
 
@@ -301,10 +298,9 @@ test...
 UserService a...
 ```
 
-其中 Pointcut  是用来定义 Advice 这段代理逻辑要执行在哪个方法上面。
+其中 Pointcut 是用来定义 Advice 这段代理逻辑要执行在哪个方法上面。
 
-这里，我们可以很方便的通过 ProxyFactory 来代理对象，但是还并没有和 Spring 中的 Bean 很方便的结合起来，接着我们就来介绍 Spring  中创建代理对象的方式。
-
+这里，我们可以很方便的通过 ProxyFactory 来代理对象，但是还并没有和 Spring 中的 Bean 很方便的结合起来，接着我们就来介绍 Spring 中创建代理对象的方式。
 
 ### 创建代理对象的方式
 
@@ -362,7 +358,6 @@ public ProxyFactoryBean userService(){
 }
 ```
 
-
 #### BeanNameAutoProxyCreator
 
 `ProxyFactoryBean` 得自己指定被代理的对象，那么我们可以通过 `BeanNameAutoProxyCreator` 来通过指定某个 Bean 的名字，来对该 Bean 进行代理：
@@ -418,8 +413,7 @@ public class MyAspect {
 ```
 
 通过上面这个类，我们就直接定义好了所要代理的方法(通过一个表达式)，以及代理逻辑（被@Before 修饰的方法），简单明了。
-这样对于 Spring 来说，它要做的就是来解析这些注解了，解析之后得到对应的 Pointcut 对象、Advice 对象，生成 Advisor 对象，扔进 ProxyFactory 中，进而产生对应的代理对象，具体怎么解析这些注解就是 **@EnableAspectJAutoProxy**  注解所要做的事情了，后面详细分析。 
-
+这样对于 Spring 来说，它要做的就是来解析这些注解了，解析之后得到对应的 Pointcut 对象、Advice 对象，生成 Advisor 对象，扔进 ProxyFactory 中，进而产生对应的代理对象，具体怎么解析这些注解就是 **@EnableAspectJAutoProxy** 注解所要做的事情了，后面详细分析。 
 
 ## Spring 中 AOP 的理解
 
@@ -433,7 +427,7 @@ compile group: 'org.aspectj', name: 'aspectjrt', version: '1.9.5'
 compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.5'
 ```
 
-值得注意的是：AspectJ 是在编译时对字节码进行了修改，是直接在 UserService 类对应的字节码中进行增强的，也就是可以理解为是在编译时就会去解析 `@Before`  这些注解，然后得到代理逻辑，加入到被代理的类中的字节码中去的，所以 **如果想用 AspectJ 技术来生成代理对象，是需要用单独的 AspectJ 编译器的** 。我们在项目中很少这么用，我们仅仅只是用了@Before 这些注解，而我们在启动 Spring 的过程中，Spring 会去解析这些注解，然后利用动态代理机制生成代理对象的。
+值得注意的是：AspectJ 是在编译时对字节码进行了修改，是直接在 UserService 类对应的字节码中进行增强的，也就是可以理解为是在编译时就会去解析 `@Before` 这些注解，然后得到代理逻辑，加入到被代理的类中的字节码中去的，所以 **如果想用 AspectJ 技术来生成代理对象，是需要用单独的 AspectJ 编译器的** 。我们在项目中很少这么用，我们仅仅只是用了@Before 这些注解，而我们在启动 Spring 的过程中，Spring 会去解析这些注解，然后利用动态代理机制生成代理对象的。
 
 IDEA 中使用 AspectJ 可以参考： https://blog.csdn.net/gavin_john/article/details/80156963
 
@@ -444,7 +438,7 @@ IDEA 中使用 AspectJ 可以参考： https://blog.csdn.net/gavin_john/article/
 
 意思是，AOP 中的这些概念不是 Spring 特有的，不幸的是，AOP 中的概念不是特别直观的，但是，如果 Spring 重新定义自己的那可能会导致更加混乱。
 
-1. Aspect：表示切面，比如被 `@Aspect`  注解的类就是切面，可以在切面中去定义 Pointcut、Advice 等等；
+1. Aspect：表示切面，比如被 `@Aspect` 注解的类就是切面，可以在切面中去定义 Pointcut、Advice 等等；
 2. Join point：表示连接点，表示一个程序在执行过程中的一个点，比如一个方法的执行，比如一个异常的处理，在 Spring AOP 中，一个连接点通常表示一个方法的执行；
 3. Advice：表示通知，表示在一个特定连接点上所采取的动作。Advice 分为不同的类型，后面详细讨论，在很多 AOP 框架中，包括 Spring，会用 Interceptor 拦截器来实现 Advice，并且在连接点周围维护一个 Interceptor 链；
 4. Pointcut：表示切点，用来匹配一个或多个连接点，Advice 与切点表达式是关联在一起的，Advice 将会执行在和切点表达式所匹配的连接点上；
@@ -480,7 +474,7 @@ Spring 会把五个注解解析为对应的 Advice 类：
 
 在我们日常的 AOP 中，被代理对象就是 Bean 对象，是由 `BeanFactory` 给我们创建出来的，但是 Spring AOP 中提供了 TargetSource 机制，可以让我们用来自定义逻辑来创建 **被代理对象**。 
 
-比如之前所提到的 `@Lazy`  注解，当加在属性上时，会产生一个代理对象赋值给这个属性，产生代理对象的代码为：
+比如之前所提到的 `@Lazy` 注解，当加在属性上时，会产生一个代理对象赋值给这个属性，产生代理对象的代码为：
 ```java
 protected Object buildLazyResolutionProxy(final DependencyDescriptor descriptor, final @Nullable String beanName) {  
       BeanFactory beanFactory = getBeanFactory();  
