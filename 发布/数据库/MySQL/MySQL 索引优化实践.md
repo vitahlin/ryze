@@ -1,13 +1,13 @@
 ---
 title: MySQL索引优化实践
-<!-- description: 这是一个副标题 -->
+desc: MySQL 索引优化是提升查询性能的关键。本篇博客通过大量实例，深入讲解索引的使用技巧，包括索引类型选择、覆盖索引、联合索引优化、索引失效的常见原因及其解决方案，帮助你在实际开发中高效优化数据库查询性能。
 date: 2022-04-12
-slug: 01GTJYEDXVJ3H44XT1J6DWXXB8
+slug: mysql-index-optimization-practices
 categories:
-    - MySQL
-
+  - Database
 tags:
-    - MySQL
+  - MySQL
+featuredImage: https://sonder.vitah.me/featured/37f078d4c842c58e1d15976b5139025b.webp
 ---
 
 ## 示例表
@@ -61,7 +61,7 @@ CALL insert_emp();
 
 ### 会不会走索引
 
-**联合索引第一个字段就用范围查找不会走索引，mysql 内部可能觉得第一个字段就用范围查找，结果集应该很大，回表效率不高，还不如全表扫描。**
+**联合索引第一个字段就用范围查找不会走索引，MySQL 内部可能觉得第一个字段就用范围查找，结果集应该很大，回表效率不高，还不如全表扫描。**
 
 ```sql
 EXPLAIN
@@ -1234,25 +1234,22 @@ FROM information_schema.optimizer_trace;
 }
 ```
 
-可以看到这里的，`sort_mode` 值为 `<sort_key, rowid>`，这里已经变为双路排序。
-
-双路排序过程
-
+可以看到这里的，`sort_mode` 值为 `<sort_key, rowid>`，这里已经变为双路排序。双路排序过程：
 1. 从索引 name 找到第一个满足条件 `name='lilei'` 的主键 ID
-2. 根据主键 ID 取出整行，把排序字段 position 和主键 ID 这两个字段放到 sort_buffer 中
+2. 根据主键 ID 取出整行，把排序字段 position 和主键 ID 这两个字段放到 `sort_buffer` 中
 3. 从索引 name 找到下一个满足条件的主键 ID
-4. 重复 2，3 步骤知道条件不满足 name='lilei'
-5. 对 sort_buffer 中的字段 position 和主键 ID 按照字段 position 进行排序
+4. 重复 2，3 步骤知道条件不满足 `name='lilei'`
+5. 对 `sort_buffer` 中的字段 position 和主键 ID 按照字段 position 进行排序
 6. 遍历排序好的 ID 和字段 position，按照主键 ID 值回到原表中取出所有字段的值返回给客户端
 
 #### 两种排序方式对比
 
-单路排序会把所有需要查询的字段都放到 sort buffer 中，而双路排序只会把主键和需要排序的字段放到 sort buffer 中进行排序，然后再通过主键回到原表查询需要的字段。
-如果 MySQL 排序内存 sort_buffer 配置的比较小并且没有条件继续增加了，可以适当把 max_length_for_sort_data 配置小点，让优化器选择使用双路排序算法，可以在 sort_buffer 中一次排序更多的行，只是需要再根据主键回到原表取数据。
-如果 MySQL 排序内存有条件可以配置比较大，可以适当增大 max_length_for_sort_data 的值，让优化器优先选择全字段排序 (单路排序)，把需要的字段放到 sort_buffer 中，这样排序后就会直接从内存里返回查询结果了。
-所以，MySQL 通过 max_length_for_sort_data 这个参数来控制排序，在不同场景使用不同的排序模式，从而提升排序效率。
+单路排序会把所有需要查询的字段都放到 sort_buffer 中，而双路排序只会把主键和需要排序的字段放到 sort buffer 中进行排序，然后再通过主键回到原表查询需要的字段。
+如果 MySQL 排序内存 sort_buffer 配置的比较小并且没有条件继续增加了，可以适当把 `max_length_for_sort_data` 配置小点，让优化器选择使用双路排序算法，可以在 sort_buffer 中一次排序更多的行，只是需要再根据主键回到原表取数据。
+如果 MySQL 排序内存有条件可以配置比较大，可以适当增大 `max_length_for_sort_data` 的值，让优化器优先选择全字段排序 (单路排序)，把需要的字段放到 sort_buffer 中，这样排序后就会直接从内存里返回查询结果了。
+所以，MySQL 通过 `max_length_for_sort_data` 这个参数来控制排序，在不同场景使用不同的排序模式，从而提升排序效率。
 
-注意，如果全部使用 sort_buffer 内存排序一般情况下效率会高于磁盘文件排序，但不能因为这个就随便增大 sort_buffer (默认 1 M)，mysql 很多参数设置都是做过优化的，不要轻易调整。
+注意，如果全部使用 `sort_buffer` 内存排序一般情况下效率会高于磁盘文件排序，但不能因为这个就随便增大 `sort_buffer` (默认 1 M)，MySQL 很多参数设置都是做过优化的，不要轻易调整。
 
 ## 分页查询优化
 
