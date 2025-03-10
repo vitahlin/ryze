@@ -1,13 +1,12 @@
 ---
 title: MySQL索引优化实践
 desc: MySQL 索引优化是提升查询性能的关键。本篇博客通过大量实例，深入讲解索引的使用技巧，包括索引类型选择、覆盖索引、联合索引优化、索引失效的常见原因及其解决方案，帮助你在实际开发中高效优化数据库查询性能。
-date: 2022-04-12
 slug: mysql-index-optimization-practices
+featuredImage: https://sonder.vitah.me/featured/37f078d4c842c58e1d15976b5139025b.webp
 categories:
   - Database
 tags:
   - MySQL
-featuredImage: https://sonder.vitah.me/featured/37f078d4c842c58e1d15976b5139025b.webp
 ---
 
 ## 示例表

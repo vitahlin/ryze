@@ -1,7 +1,6 @@
 ---
 title: 在M1上使用CMake编译redis6.2.14
 slug: m1-cmake-compile-redis6
-date: 2024-08-29
 desc: 本文介绍了如何在 macOS M1 系统上使用 CMake 编译 Redis 6.2.14 版本的详细步骤。由于 Redis 官方在 6.2.14 版本之前对 ARM 架构的支持存在问题，因此推荐使用 6.2.14 或更高版本进行编译。文章提供了从创建 CMakeLists.txt 文件到编译和安装 Redis 的完整流程，包括各个依赖库（如 hdr_histogram、hiredis、linenoise、lua）的 CMake 配置。通过本文的指南，读者可以在 macOS M1 系统上顺利编译并安装 Redis 6.2.14。
 featuredImage: https://sonder.vitah.me/featured/833a09cb7a72909c6052e66a0fb2fafe.webp
 categories:

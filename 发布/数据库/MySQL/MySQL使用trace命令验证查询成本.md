@@ -1,6 +1,5 @@
 ---
 title: MySQL使用trace命令验证查询成本
-date: 2024-09-05
 slug: mysql-trace-command-query-cost-analysis
 categories:
   - Database

@@ -1,6 +1,5 @@
 ---
 title: MySQL explain命令介绍
-date: 2024-09-04
 slug: mysql-explain-command-introduction
 categories:
   - Database

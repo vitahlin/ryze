@@ -1,6 +1,5 @@
 ---
 title: MySQL 索引优化规则
-date: 2025-03-06
 slug: mysql-index-optimization-rules
 categories:
   - Database
