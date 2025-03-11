@@ -133,6 +133,9 @@
 }
 
 /* main.css */
+.quiet-outline .n-tree {
+  padding-top: 5px;
+}
 .quiet-outline .n-tree .n-tree-node-indent {
   content: "";
   height: unset;
