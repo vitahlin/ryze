@@ -156,7 +156,7 @@ BOM 全称是 Bill Of Materials，译作材料清单。BOM 本身并不是一种
 
 - 直接在当前工程中显示指定的版本
 - parent 中配置的父工程使用的版本
-- 在当前工程中通过 dependencyManagement 引入的 BOM 清单中的版本，当引入的多个 BOM 都有对应 jar 包时，先引入的 BOM 生效
+- 在当前工程中通过 `dependencyManagement` 引入的 BOM 清单中的版本，当引入的多个 BOM 都有对应 jar 包时，先引入的 BOM 生效
 - 上述三个地方都没配置，则启用依赖调解 dependency mediation
 
 什么是依赖调节？
