@@ -1,5 +1,5 @@
 ---
-title: MySQL 索引优化规则
+title: MySQL索引优化规则
 slug: mysql-index-optimization-rules
 categories:
   - Database
