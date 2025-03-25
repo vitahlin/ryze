@@ -6,5 +6,6 @@
   "colored-tags",
   "obsidian-linter",
   "editing-toolbar",
-  "templater-obsidian"
+  "templater-obsidian",
+  "mdx-as-md-obsidian"
 ]
