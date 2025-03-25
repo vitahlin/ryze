@@ -249,7 +249,7 @@ Process finished with exit code 0
 
 ### 使jdk中自己修改的代码能够执行
 
-如何使 `jdk` 代码中的 `println` 函数生效，可以参考这个链接：[https://www.cnblogs.com/grey-wolf/p/12817615.html#_label4](https://www.cnblogs.com/grey-wolf/p/12817615.html#_label4)
+如何使 JDK 代码中的 `println` 函数生效，可以参考这个链接：[https://www.cnblogs.com/grey-wolf/p/12817615.html#_label4](https://www.cnblogs.com/grey-wolf/p/12817615.html#_label4)
 
 这个值的生成规则可以参考代码（运行时，修改 `myPath` 为自己本机路径即可）：
 
@@ -303,7 +303,7 @@ This is my ArrayList
 Process finished with exit code 0
 ```
 
-这样，就可以给 `jdk` 自由增加注释修改源代码了。
+这样，就可以给 JDK 自由增加注释修改源代码了。
 
 ## 参考链接
 
