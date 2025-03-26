@@ -59,7 +59,7 @@ public class HelloWorldTest {
 2. 第二行代码，会调用 `AnnotationConfigApplicationContext` 的 `getBean` 方法，会得到一个 `HelloWorldService` 对象，`getBean()` 是如何实现的？返回的 `HelloWorldService` 对象和我们自己直接 `new` 的 `HelloWorldService` 对象有区别吗？
 3. 第三行代码比较简单，就是调用 `HelloWorldService` 的 `sayHello()` 方法
 
-光看这三行代码，并不能体现 Spring 的强大之处，但是我们现在可以认为：如果你要用 Spring，你就得这么写。就像要用 Mybatis，就得写各种 Mappe r接口。
+光看这三行代码，并不能体现 Spring 的强大之处，但是我们现在可以认为：如果你要用 Spring，你就得这么写。就像要用 Mybatis，就得写各种 Mapper 接口。
 
 接下来，我们就简单介绍一下 Spring 的底层核心原理。
 

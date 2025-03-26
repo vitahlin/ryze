@@ -39,7 +39,7 @@ desc: 介绍如何调试JDK源码的详细教程，方便我们更好的深入�
 7 directories, 6 files
 ```
 
-可以看到目录下有一个 `src.zip` 的压缩包，这个即是 `JDK8` 的源代码压缩包。
+可以看到目录下有一个 `src.zip` 的压缩包，这个即是 JDK8 的源代码压缩包。
 
 ## 新建项目导入源代码
 
@@ -59,7 +59,7 @@ jdk8-analyse
 8 directories
 ```
 
-导入后，直接用 `Intellij-Idea` 打开项目 `jdk8-analyse`。
+导入后，直接用 Intellij-Idea 打开项目 `jdk8-analyse`。
 
 ### 编译错误处理
 
