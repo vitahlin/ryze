@@ -303,3 +303,19 @@ int main(int argc, char **argv) {
     return 0;  
 }
 ```
+
+运行结果：
+```shell
+> ./echo_time_tcp_srv_ch1_9
+time server running...
+New client connect IP=0.0.0.0, port=0, conn_id=4
+
+```
+
+```shell
+> ./get_time_tcp_cli_ch1_5
+Input IP address: 127.0.0.1
+Input port: 9876
+Wed Mar 26 21:05:29 2025
+```
+
