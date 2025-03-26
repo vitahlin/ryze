@@ -18,7 +18,6 @@ typedef int elemtype;
 
 此时`elemtype`等价于`int`，即可用 `elemtype a;` 语句定义一个`int`类型的数据。
 
-
 重点在于与结构体结合使用，例如：
 ```c
 typedef struct tagMyStruct
