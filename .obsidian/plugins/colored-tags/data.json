@@ -23,7 +23,8 @@
     "Redis": 11,
     "Methodology": 12,
     "SystemDesign": 13,
-    "RocketMQ": 14
+    "RocketMQ": 14,
+    "Shell": 15
   },
   "_version": 3
 }
