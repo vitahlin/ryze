@@ -1,3 +1,14 @@
+---
+title: TCP三次握手流程
+slug: tcp-three-way-handshake
+categories:
+  - Lang
+tags:
+  - C
+featuredImage: https://sonder.vitah.me/ryze/c844b739df170ffc3996e9e86f9483d2.webp
+desc: TCP 三次握手是建立可靠连接的核心过程，它通过 SYN、SYN-ACK 和 ACK 消息的交互，确保客户端和服务器能够顺利建立通信通道。本文将通过 Wireshark 抓包，详细展示 TCP 三次握手的具体流程，解析每一步的作用和背后的原理，帮助你更好地理解这一关键网络机制。
+draft: "false"
+---
 
 ### 概述
 
@@ -123,12 +134,12 @@ int main(int argc, char **argv) {
 代码实现的逻辑是启动服务器后，客户端连接服务器打印从服务器收到的时间字符串，然后客户端断掉连接。
 接着，我们通过`Wireshark`来分析这整个流程。
 
-抓包整个流程如下：
-![image.png](https://vitahlin.oss-cn-shanghai.aliyuncs.com/images/blog/2022/07/202212151944043.png)
+抓包整个流程如下图：
+![](https://sonder.vitah.me/ryze/0f80ac3a7314939c0d3f8ff49817ae4e.webp)
 
 #### 第一次握手
 
-如上图所示，选择**序号为1**的包，因为我们是要分析TCP报文，右键`Transmission Control Protocol`项，选择`Expand All`展开全部项，然后选择`Copy-All Visible Selected Tree Items`复制TCP报文中的全部内容，结果如下：
+如上图所示，选择 **序号为1** 的包，因为我们是要分析TCP报文，右键`Transmission Control Protocol`项，选择`Expand All`展开全部项，然后选择`Copy-All Visible Selected Tree Items`复制TCP报文中的全部内容，结果如下：
 
 ```c
 Transmission Control Protocol, Src Port: 51567 (51567), Dst Port: sd (9876), Seq: 1536975978, Len: 0
@@ -198,20 +209,18 @@ Transmission Control Protocol, Src Port: 51567 (51567), Dst Port: sd (9876), Seq
 - Flags 各种标志位，其中`SYN`是1
 
 到此，我们就知道TCP三次握手的第一次握手内容：
-
-> 客户端对服务器发起连接，发送SYN=1，以及Seq_Num=X
+> 客户端对服务器发起连接，发送 `SYN=1` ，以及 `Seq_Num=X` 
 
 #### 第二次握手
 
-同样选择**序号2**，然后查看TCP报文内容。
-
+同样选择**序号2**，然后查看TCP报文内容：
 - Source Port 起始端口，9876表示从服务器出发
 - Destination Port 目的端口，51576
 - Sequence number: 3764405294
 - Acknowledgment number: 1536975979
 - Flags `SYN`和`ACK`是1
 
-> 服务器发送数据给客户端，发送SYN=1，ACK=1，并且收到从客户端传来的Seq_Num=X，发送Ack_Num=X+1用于确认，并且发送自身的Seq_Num=Y
+> 服务器发送数据给客户端，发送 `SYN=1`，`ACK=1` ，并且收到从客户端传来的 `Seq_Num=X` ，发送 `Ack_Num=X+1` 用于确认，并且发送自身的 `Seq_Num=Y` 
 
 #### 第三次握手
 
@@ -221,16 +230,16 @@ Transmission Control Protocol, Src Port: 51567 (51567), Dst Port: sd (9876), Seq
 - Acknowledgment number: 3764405295
 - Flags `ACK`是1
 
-> 客户端发送数据到服务器，发送ACK=1，收到从服务器传来的Seq_Num=Y，发送Ack_Num=Y+1确认，发送自身的当前顺序号码，第一次握手顺序号码是X，所以这一次的顺序号码Seq Num=X+1
+> 客户端发送数据到服务器，发送 `ACK=1`，收到从服务器传来的 `Seq_Num=Y`，发送 `Ack_Num=Y+1` 确认，发送自身的当前顺序号码，第一次握手顺序号码是 `X`，所以这一次的顺序号码 `Seq Num=X+1`
 
 序号为4的内容为`TCP Window Update`，这个用于窗口更新，这里不做赘述。
 序号为5的内容如图：
-![image.png](https://vitahlin.oss-cn-shanghai.aliyuncs.com/images/blog/2022/07/202212151945193.png)
+![](https://sonder.vitah.me/ryze/0c40149bf4f990f6fea3066ebdc1f52e.webp)
 
 可以看到，序号5中服务器对客户端发送了数据，数据内容是当时的服务器时间，这里开始就是TCP互相传输内容的部分。
 
 可以用一张图来表现TCP三次握手的过程：
-![image.png](https://vitahlin.oss-cn-shanghai.aliyuncs.com/images/blog/2022/07/202212151945712.png)
+![](https://sonder.vitah.me/ryze/cb88a4b4fca34a33609a25707e1a3370.webp)
 
 ### TCP为什么是三次握手
 
@@ -246,5 +255,4 @@ Transmission Control Protocol, Src Port: 51567 (51567), Dst Port: sd (9876), Seq
 
 ### 参考
 
-- [https://notfalse.net/7/three-way-handshake](https://notfalse.net/7/three-way-handshake)
 - [https://www.cnblogs.com/cy568searchx/p/3711670.html](https://www.cnblogs.com/cy568searchx/p/3711670.html)

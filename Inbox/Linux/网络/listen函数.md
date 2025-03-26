@@ -13,5 +13,4 @@ int listen ( int sockfd,  int backlog )
 > 1. 未完成连接队列。服务区正在等待完成相应的TCP三次握手连接。
 > 2. 已完成连接队列。每个已经完成的TCP三次握手过程的客户对应其中一项。
 
-
 上述两个队列之和不超过 backlog。
