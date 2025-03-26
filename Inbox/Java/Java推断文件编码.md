@@ -1,5 +1,9 @@
 
 ```java
+import com.ibm.icu.text.CharsetDetector;  
+import com.ibm.icu.text.CharsetMatch;
+import java.io.*;
+
 public static String detectFileType(InputStream inputStream) {  
     try {  
         BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);  
@@ -10,6 +14,6 @@ public static String detectFileType(InputStream inputStream) {
     } catch (IOException e) {  
         e.printStackTrace();  
         return "";  
-    }  
+    }
 }
 ```
