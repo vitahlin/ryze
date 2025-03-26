@@ -4,6 +4,6 @@ slug:
 categories: 
 tags: 
 featuredImage: 
-desc:
----
+desc: 
+draft: true
 ---

@@ -8,6 +8,7 @@ tags:
   - C
 featuredImage: https://sonder.vitah.me/featured/3baa8e7de9911154e1f7d50bf98b854b.webp
 desc: 介绍了如何通过使用__attribute__ ((__packed__))关键字来取消默认的字节对齐，从而减少内存占用。通过一个简单的代码示例展示了在字节对齐和非字节对齐情况下结构体的内存占用对比。
+draft: false
 ---
 
 C/C++中，建立一个结构体的时候，会进行字节对齐操作，所以往往比实际变量占用的字节数要多一些。

@@ -7,6 +7,7 @@ tags:
   - C
 featuredImage: https://sonder.vitah.me/ryze/99e77209a0dbf2d3d43bdc409fb0fde8.webp
 desc: 在 C 语言中，typedef 关键字用于为已有类型创建新的别名，从而提高代码的可读性和可维护性。本篇博客将深入解析 typedef 的用法，包括结构体重命名、指针类型定义、函数指针的应用，以及 typedef 和 struct 的区别，帮助你全面掌握 typedef 的使用技巧。
+draft: false
 ---
 
 概述：是一种在计算机编程语言中用来声明自定义数据类型，配合各种原有数据类型来达到简化编程的目的的类型定义关键字。

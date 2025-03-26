@@ -8,6 +8,7 @@ tags:
   - Spring
 featuredImage: https://sonder.vitah.me/featured/e8962fa8cb5b633b5d8219478d105259.webp
 desc: 在 Spring 框架中，FactoryBean 是一个特殊的 Bean，它并不直接返回实例，而是通过实现 getObject 方法来生成或修饰对象。本文介绍了 FactoryBean 的概念及其与 BeanFactory 的区别，探讨了它在 Spring 容器中的重要作用，并举例说明如何使用 FactoryBean 来简化复杂对象的实例化过程。
+draft: false
 ---
 
 # 概述
