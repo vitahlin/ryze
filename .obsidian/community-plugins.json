@@ -7,5 +7,6 @@
   "obsidian-linter",
   "editing-toolbar",
   "templater-obsidian",
-  "mdx-as-md-obsidian"
+  "mdx-as-md-obsidian",
+  "floating-toc"
 ]
