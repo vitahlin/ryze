@@ -131,7 +131,7 @@ if (bind(listen_fd, (const struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0
 }
 ```
 
-对于 IPv4 来说，通配地址通常由 `INADDR_ANY` 来指定，其值一般为 0.0.0.0，表示不确定地址，或者“所有地址”，“任意地址”。
+对于 IPv4 来说，通配地址通常由 `INADDR_ANY` 来指定，其值一般为 `0.0.0.0` ，表示任意地址。
 
 ### listen函数
 
@@ -152,7 +152,6 @@ int listen ( int sockfd,  int backlog )
 > 内核为任何一个给定的监听套接字维护两个队列：
 > 1. 未完成连接队列。服务区正在等待完成相应的TCP三次握手连接。
 > 2. 已完成连接队列。每个已经完成的TCP三次握手过程的客户对应其中一项。
-
 上述两个队列之和不超过 backlog。
 
 ### accept函数
@@ -326,4 +325,3 @@ Input IP address: 127.0.0.1
 Input port: 9876
 Wed Mar 26 21:05:29 2025
 ```
-
