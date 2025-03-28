@@ -9,7 +9,7 @@ tags:
   - Redis
 ---
 
-在 MAC M1 系统上编译 redis 源码会有如下问题：[https://github.com/redis/redis/issues/12585](https://github.com/redis/redis/issues/12585)
+在 MAC M1 系统上编译 redis 源码会有如下问题： [https://github.com/redis/redis/issues/12585](https://github.com/redis/redis/issues/12585)
 所以我们需要下载 6.2.14 及以后的版本。
 
 ## 相关版本说明
