@@ -54,7 +54,7 @@ public interface FactoryBean<T> {
 - getObjectType：返回 `FactoryBean` 创建的 bean 类型；
 - isSingleton：返回由 `FactoryBean` 创建的 bean 实例的作用域是 `singleton` 还是 `prototype`，如果返回 false，表示由这个 FactoryBean 创建的对象是多例的，那么我们每次从容器中 `getBean` 的时候都会去重新调用 FactoryBean 中的 `getObject` 方法获取一个新的对象。若返回 true，表示创建的对象是单例的，那么我们每次从容器中获取这个对象的时候都是同一个对象。
 
-`FactoryBean` 接口很简单，就提供了三个方法 `getObject`、`getObjectType`、`isSingleton`。就是这三个方法却成为了 Spring 中很多功能的基础，搜索整个 Spring 的源码可以找到很多 `FactoryBean`，除了 Spring 自身提供的以外，在和一些框架进行集成的时候，同样有 `FactoryBean` 的影子，比如和mybatis集成的时候的 `SqlSessionFactoryBean`。
+`FactoryBean` 接口很简单，就提供了三个方法 `getObject`、`getObjectType`、`isSingleton`。就是这三个方法却成为了 Spring 中很多功能的基础，搜索整个 Spring 的源码可以找到很多 `FactoryBean`，除了 Spring 自身提供的以外，在和一些框架进行集成的时候，同样有 `FactoryBean` 的影子，比如和 mybatis 集成的时候的 `SqlSessionFactoryBean`。
 
 # SmartFactoryBean
 
@@ -154,6 +154,6 @@ myFactoryBean:MyFactoryBean{}
 
 `FactroyBean` 的作用是生产一个 `bean`，这里有一个疑问 Spring 就是用来生产 `bean` 和管理 `bean` 的，为什么还要有 `FactoryBean`？
 
-一般情况下，Spring 通过反射机制利用   的 class 属性指定实现类实例化 Bean，在某些情况下，实例化 Bean 过程比较复杂，如果按照传统的方式，则需要在  中提供大量的配置信息。配置方式的灵活性是受限的，这时采用编码的方式可能会得到一个简单的方案。Spring 为此提供了一个 org.springframework.bean.factory.FactoryBean 的工厂类接口，用户可以通过实现该接口定制实例化 bean 的逻辑。FactoryBean 接口对于 Spring 框架来说占用重要的地位，Spring 自身就提供了70多个 FactoryBean 的实现。
+一般情况下，Spring 通过反射机制利用的 class 属性指定实现类实例化 Bean，在某些情况下，实例化 Bean 过程比较复杂，如果按照传统的方式，则需要在中提供大量的配置信息。配置方式的灵活性是受限的，这时采用编码的方式可能会得到一个简单的方案。Spring 为此提供了一个 org. springframework. bean. factory. FactoryBean 的工厂类接口，用户可以通过实现该接口定制实例化 bean 的逻辑。FactoryBean 接口对于 Spring 框架来说占用重要的地位，Spring 自身就提供了 70 多个 FactoryBean 的实现。
 
 FactoryBean 的真正目的是让开发者自己去定义那些复杂的 bean 并交给 spring 管理，如果 bean 中要初始化很多变量，而且要进行许多操作，那么使用 spring 的自动装配是很难完成的，所以 Spring 的开发者把这些工作交给了我们。
