@@ -18,23 +18,23 @@ tags:
 - **macOS：14.4.1**
 - **CMake：3.19.6**
 
-## 对应的 CMakeLists.txt 文件
+## 对应的 CMakeLists. txt 文件
 
-使用`cmake` 编译`redis` 源码的话需要创建对应的`CMakeLists.txt` 文件，根据下述步骤创建对应的 CMakeLists.txt 文件。
+使用 `cmake` 编译 `redis` 源码的话需要创建对应的 `CMakeLists.txt` 文件，根据下述步骤创建对应的 CMakeLists. txt 文件。
 
-### /deps/hde_histogram/CMakeLists.txt
+### /deps/hde_histogram/CMakeLists. txt
 
 ```c
 add_library(hdr_histogram hdr_histogram.c)
 ```
 
-### /deps/linenoise/CMakeLists.txt
+### /deps/linenoise/CMakeLists. txt
 
 ```c
 add_library(linenoise linenoise.c)
 ```
 
-### /deps/lua/CMakeLists.txt
+### /deps/lua/CMakeLists. txt
 
 ```c
 add_subdirectory(hdr_histogram)
@@ -43,7 +43,7 @@ add_subdirectory(linenoise)
 add_subdirectory(lua)
 ```
 
-### /deps/CMakeLists.txt
+### /deps/CMakeLists. txt
 
 ```c
 add_subdirectory(hdr_histogram)
@@ -52,7 +52,7 @@ add_subdirectory(linenoise)
 add_subdirectory(lua)
 ```
 
-### CMakeLists.txt
+### CMakeLists. txt
 
 ```c
 # cmake最低版本要求

@@ -14,7 +14,7 @@ tags:
 
 1. Parallels 版本 20.2.0
 2. macOS M1 15.3
-3. 下载 ubuntu的 iso 镜像
+3. 下载 ubuntu 的 iso 镜像
 
 # 安装
 
@@ -23,9 +23,9 @@ tags:
 我们可以安装 Parallels 提供支持的 Ubuntu 镜像，也可以选择自己下载的镜像，这里我们通过镜像安装：
 ![](https://sonder.vitah.me/ryze/95249c02d0552655b202b6628759d58b.webp)
 
-下一步后，选择已经下载的iso镜像即可。比如 Ubuntu 22.04 文件为：ubuntu-22.04.4-live-server-amd64.iso，下载地址：[Index of /releases](https://old-releases.ubuntu.com/releases/)
+下一步后，选择已经下载的 iso 镜像即可。比如 Ubuntu 22.04 文件为：ubuntu-22.04.4-live-server-amd 64. iso，下载地址：[Index of /releases](https://old-releases.ubuntu.com/releases/)
 
-我们下载的这个镜像就是 amd64 的，但是在Parallels进行安装的时候会提示错误：
+我们下载的这个镜像就是 amd 64 的，但是在 Parallels 进行安装的时候会提示错误：
 
 > **The specified image cannot be used because your Mac is equipped with the Apple M series chip that doesn’t support Intel-based operating systems.**
 
@@ -34,32 +34,32 @@ tags:
 
 这个问题目前解决不了，换成 Ubuntu 22.04.5 的服务器镜像就能正常识别并且安装，只能尝试选择匹配的镜像。
 
-**支持M1的Ubuntu镜像**
+**支持 M 1 的 Ubuntu 镜像**
 
 | 镜像名称                  | 下载地址                                                         |
 | --------------------- | ------------------------------------------------------------ |
-| ubuntu server 22.04.3 | magnet:?xt=urn:btih:931CAE3D8B23994E59EEAA0CEAA1C8CB011F693B |
-| ubuntu server 22.04.5 | magnet:?xt=urn:btih:502D81DF4E4CD216BCE32EB05CC54B5A5359DEE0 |
-| ubuntu server 24.04.1 | magnet:?xt=urn:btih:C8814DCE02E49A455F60002FBABBFE4E4D3F22A9 |
+| ubuntu server 22.04.3 | magnet:? xt=urn:btih: 931 CAE 3 D 8 B 23994 E 59 EEAA 0 CEAA 1 C 8 CB 011 F 693 B |
+| ubuntu server 22.04.5 | magnet:? xt=urn:btih: 502 D 81 DF 4 E 4 CD 216 BCE 32 EB 05 CC 54 B 5 A 5359 DEE 0 |
+| ubuntu server 24.04.1 | magnet:? xt=urn:btih: C 8814 DCE 02 E 49 A 455 F 60002 FBABBFE 4 E 4 D 3 F 22 A 9 |
 
 ## 开始安装
 
 选择镜像后，开始下一步，设置名称和位置：
 ![](https://sonder.vitah.me/ryze/a002927fbfc5e421751ae3886fff4e28.webp)
 
-如果有需要还可以修改虚拟机配置，比如CPU核心数和内存，**注意这个只能在安装时修改，需要勾选上图中的 `Customize settings before installation`**
+如果有需要还可以修改虚拟机配置，比如 CPU 核心数和内存，**注意这个只能在安装时修改，需要勾选上图中的 `Customize settings before installation`**
 ![](https://sonder.vitah.me/ryze/32b484c1ff7ffc6aaebc6ae483a9c83e.webp)
 
-如果需要修改配置，选择Configure后在 Hardware 中设置CPU和内存：
+如果需要修改配置，选择 Configure 后在 Hardware 中设置 CPU 和内存：
 ![](https://sonder.vitah.me/ryze/ff847a15adccf59da1c358186b1a51be.webp)
 
-Continue后就进入 Ubuntu Server的安装界面，选择对应的设置一步一步安装即可，安装过程可能会比较久，提示 Installation complete 后，选择Reboot完成安装。
+Continue 后就进入 Ubuntu Server 的安装界面，选择对应的设置一步一步安装即可，安装过程可能会比较久，提示 Installation complete 后，选择 Reboot 完成安装。
 
 # 安装后设置
 
-## 使用ssh连接ubuntu虚拟机
+## 使用 ssh 连接 ubuntu 虚拟机
 
-在虚拟机中执行命令 `ip addr` 查看当前虚拟机的IP是多少，结果如下：
+在虚拟机中执行命令 `ip addr` 查看当前虚拟机的 IP 是多少，结果如下：
 
 ```bash
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
@@ -78,7 +78,7 @@ Continue后就进入 Ubuntu Server的安装界面，选择对应的设置一步�
        valid_lft forever preferred_lft forever
 ```
 
-可以看到当前虚拟机的IP地址是 10.211.55.6，后续在 macOS中就能通过 ssh 连接虚拟机：
+可以看到当前虚拟机的 IP 地址是 10.211.55.6，后续在 macOS 中就能通过 ssh 连接虚拟机：
 
 ```bash
 ❯ ssh vitah@10.211.55.6
@@ -91,15 +91,15 @@ Welcome to Ubuntu 22.04.3 LTS (GNU/Linux 5.15.0-107-generic aarch64)
 ### 安装 Parallels Tools
 
 1. 设置源
-先关闭虚拟机，然后设置 CD/DVD 的源，把它连接到 ptl-tools-lin-arm.iso，如图：
+先关闭虚拟机，然后设置 CD/DVD 的源，把它连接到 ptl-tools-lin-arm. iso，如图：
 ![](https://sonder.vitah.me/ryze/5cf8d0167af0fe4455ced255773841d0.webp)
 
-这个镜像文件的位置在 **/Applications/Parallels Desktop.app/Contents/Resources/Tools/** 目录下，针对不同的主机和CPU选择合适的镜像，其中 `lin` 代表 linux，`arm` 代表支持 arm 芯片的。
+这个镜像文件的位置在 **/Applications/Parallels Desktop. app/Contents/Resources/Tools/** 目录下，针对不同的主机和 CPU 选择合适的镜像，其中 `lin` 代表 linux，`arm` 代表支持 arm 芯片的。
 
-2. 调整启动顺序，把CD/DVD调到第一位，接着是硬盘，然后reboot重启虚拟机
+2. 调整启动顺序，把 CD/DVD 调到第一位，接着是硬盘，然后 reboot 重启虚拟机
 ![](https://sonder.vitah.me/ryze/1c7c628654342e3a144f8fabe9282d16.webp)
 
-3. 重启完成后，进入ubuntu虚拟机，开始挂载目录
+3. 重启完成后，进入 ubuntu 虚拟机，开始挂载目录
 ```bash
 cd /media
 
@@ -130,7 +130,7 @@ vitah@ubuntu-vm:/media/cdrom$ sudo ./install
 Started installation of Parallels Guest Tools version'20.2.0.55872'
 ```
 
-出现 `Started installation of Parallels Guest Tools version'20.2.0.55872'`就是在安装中，安装完成后会出现：
+出现 `Started installation of Parallels Guest Tools version'20.2.0.55872'` 就是在安装中，安装完成后会出现：
 ```bash
 Parallels Guest Tools were installed successfully!
 ```
@@ -140,7 +140,7 @@ Parallels Guest Tools were installed successfully!
 安装完后后停止虚拟机，在设置中设置共享目录，如图：
 ![](https://sonder.vitah.me/ryze/56e5e036abd2d12f8f934c4036641283.webp)
 
-选择Manage Folders，设置Mac文件夹目录 dev 为共享文件夹，如图：
+选择 Manage Folders，设置 Mac 文件夹目录 dev 为共享文件夹，如图：
 ![](https://sonder.vitah.me/ryze/f94f4409d7edadd314706396395b2a88.webp)
 
 设置完成后重启虚拟机，就能在 `/media/psf` 目录下看到共享的文件夹：

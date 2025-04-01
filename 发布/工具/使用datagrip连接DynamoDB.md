@@ -10,13 +10,13 @@ tags:
   - tools
 ---
 
-# 配置Profile
+# 配置 Profile
 
 **Profile** 是 AWS 访问凭证的**命名配置**，默认是 `default`，但可以创建多个。
 
 配置文件存储在： `~/.aws/credentials` 
 
-如果不存在就新建文件， 内容如下：
+如果不存在就新建文件，内容如下：
 ```sql
 [default]
 aws_access_key_id = abc
@@ -29,9 +29,9 @@ aws_secret_access_key = def
 region = us-east-2
 ```
 
-# datagrip连接配置
+# datagrip 连接配置
 
-Host是固定的格式，`dynamodb.{aws-region}.amazonaws.com` ， `aws-region` 是亚马逊AWS的区域，详细配置如下图：
+Host 是固定的格式，`dynamodb.{aws-region}.amazonaws.com` ， `aws-region` 是亚马逊 AWS 的区域，详细配置如下图：
 ![](https://sonder.vitah.me/ryze/9583d5a49d664385fc050e0846b43b4d.webp)
 
 `Profile` 取的是文件 `credentials` 的配置，没配置默认取 `default`。

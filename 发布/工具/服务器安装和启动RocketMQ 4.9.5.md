@@ -10,7 +10,7 @@ categories:
   - MessageQueue
 ---
 
-## 安装JDK
+## 安装 JDK
 
 首先需要安装 sdkman，参考官网教程：[Installation - SDKMAN! the Software Development Kit Manager](https://sdkman.io/install)
 
@@ -20,9 +20,9 @@ categories:
  sdk install java 8.0.402-zulu
 ```
 
-## 安装4.9.5
+## 安装 4.9.5
 
-当前最新的版本是5.x，这是一个着眼于云原生的新版本，给 RocketMQ 带来了非常多很亮眼的新特性。但是目前来看，企业中用得还比较少。因此，我们这里采用的还是更为稳定的4.9.5版本。
+当前最新的版本是 5. x，这是一个着眼于云原生的新版本，给 RocketMQ 带来了非常多很亮眼的新特性。但是目前来看，企业中用得还比较少。因此，我们这里采用的还是更为稳定的 4.9.5 版本。
 
 ```bash
 wget <https://archive.apache.org/dist/rocketmq/4.9.5/rocketmq-all-4.9.5-bin-release.zip>
@@ -45,13 +45,13 @@ unzip rocketmq-all-4.9.5-bin-release.zip
 - benchmark 压测脚本
 - bin 执行脚本
 - conf 配置文件
-- lib 运行的jar包
+- lib 运行的 jar 包
 
 ## 运行
 
 ### 修改运行环境配置
 
-RocketMQ 建议的运行环境需要至少12G的内存，这是生产环境比较理想的资源配置。但是，学习阶段，如果你的服务器没有这么大的内存空间，那么就需要做一下调整。进入 `bin` 目录，对其中的 `runserver.sh` 和 `runbroker.sh` 两个脚本进行修改。
+RocketMQ 建议的运行环境需要至少 12 G 的内存，这是生产环境比较理想的资源配置。但是，学习阶段，如果你的服务器没有这么大的内存空间，那么就需要做一下调整。进入 `bin` 目录，对其中的 `runserver.sh` 和 `runbroker.sh` 两个脚本进行修改。
 
 修改 `bin/runserver.sh` ，找到
 
@@ -59,7 +59,7 @@ RocketMQ 建议的运行环境需要至少12G的内存，这是生产环境比�
 JAVA_OPT="${JAVA_OPT} -server -Xms4g -Xmx4g -Xmn2g -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=320m"
 ```
 
-调整Java进程的内存大小：
+调整 Java 进程的内存大小：
 
 ```bash
 JAVA_OPT="${JAVA_OPT} -server -Xms512m -Xmx512m -Xmn256g -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=320m"
@@ -81,7 +81,7 @@ JAVA_OPT="${JAVA_OPT} -server -Xms1g -Xmx1g"
 
 **注：生产环境不建议调整**
 
-### 启动nameserver服务
+### 启动 nameserver 服务
 
 显示启动 `bin/mqnamesrv` ，运行结果如下：
 
@@ -100,7 +100,7 @@ The Name Server boot success. serializeType=JSON
 
 ### 启动 broker 服务
 
-启动broker服务前，为了方便我们测试，需要修改 `conf/broker.conf` 文件，追加配置：
+启动 broker 服务前，为了方便我们测试，需要修改 `conf/broker.conf` 文件，追加配置：
 
 ```bash
 autoCreateTopicEnable=true
@@ -108,7 +108,7 @@ autoCreateTopicEnable=true
 
 表示允许 broker 端自动创建新的 Topic.
 
-> 另外，如果服务器配置了多张网卡，比如阿里云，腾讯云这样的云服务器，他们通常有内网网卡和外网网卡两张网卡，那么需要增加配置 `brokerIP1` 属性，指向服务器的外网IP 地址，这样才能确保从其他服务器上访问到 RocketMQ 服务。
+> 另外，如果服务器配置了多张网卡，比如阿里云，腾讯云这样的云服务器，他们通常有内网网卡和外网网卡两张网卡，那么需要增加配置 `brokerIP1` 属性，指向服务器的外网 IP 地址，这样才能确保从其他服务器上访问到 RocketMQ 服务。
 
 如：
 ```bash
@@ -189,7 +189,7 @@ export NAMESRV_ADDR=localhost:9876
 sh tools.sh org.apache.rocketmq.example.quickstart.Producer
 ```
 
-这个指令会默认往 RocketMQ 中发送1000条消息。在命令行窗口可以看到发送消息的日志。运行结果如下 ：
+这个指令会默认往 RocketMQ 中发送 1000 条消息。在命令行窗口可以看到发送消息的日志。运行结果如下 ：
 ```bash
 SendResult [sendStatus=SEND_OK, msgId=7F000001E29F2FF4ACD051AC3BAF0000, offsetMsgId=AC145F4600002A9F0000000000000000, messageQueue=MessageQueue [topic=TopicTest, brokerName=iZ2ze87wqglz1vylrsw0m1Z, queueId=2], queueOffset=0]
 SendResult [sendStatus=SEND_OK, msgId=7F000001E29F2FF4ACD051AC3BF30001, offsetMsgId=AC145F4600002A9F00000000000000BE, messageQueue=MessageQueue [topic=TopicTest, brokerName=iZ2ze87wqglz1vylrsw0m1Z, queueId=3], queueOffset=0]

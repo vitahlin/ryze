@@ -10,14 +10,12 @@ desc: 在 C 语言中，typedef 关键字用于为已有类型创建新的别名
 draft: false
 ---
 
-概述：是一种在计算机编程语言中用来声明自定义数据类型，配合各种原有数据类型来达到简化编程的目的的类型定义关键字。
-
-用法：
+概述：是一种在计算机编程语言中用来声明自定义数据类型，配合各种原有数据类型来达到简化编程的目的的类型定义关键字。用法：
 ```c
 typedef int elemtype;
 ```
 
-此时`elemtype`等价于`int`，即可用 `elemtype a;` 语句定义一个`int`类型的数据。
+此时 `elemtype` 等价于 `int`，即可用 `elemtype a;` 语句定义一个 `int` 类型的数据。
 
 重点在于与结构体结合使用，例如：
 ```c
@@ -47,7 +45,7 @@ typedef struct tagMyStruct MyStruct;
 ```
 
 因此，`MyStruct` 实际上相当于 `struct tagMyStruct`，我们可以使用 `MyStruct varName` 来定义变量。
-当然，MyStruct 可以命名为 tagMyStruct一样，例如 Redis 中的用法：
+当然，MyStruct 可以命名为 tagMyStruct 一样，例如 Redis 中的用法：
 ```c
 typedef struct aeApiState {  
     int kqfd;  
@@ -57,7 +55,7 @@ typedef struct aeApiState {
 ```
 `aeApiData` 既是**结构体标签**，也是 `typedef` 之后的类型名。
 
-同样 `typedef` 也可以应用于 函数指针和 二级指针（指针的指针），如：
+同样 `typedef` 也可以应用于函数指针和二级指针（指针的指针），如：
 ```c
 typedef void (*FuncPtr)(int);  // 定义函数指针类型
 

@@ -39,13 +39,13 @@ Nerd font 的原理和 Powerline fonts 是一样的，也是针对已有的字�
 
 ![NerdFont.png](https://sonder.vitah.me/blog/2024/6d1bd6b3cb003528884e860c4aaae87f.webp)
 
-比如主题 [powerlevel10k/powerlevel10k]( https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fromkatv%2Fpowerlevel10k%23oh-my-zsh " https://github.com/romkatv/powerlevel10k#oh-my-zsh" )，就推荐使用 Nerd font（虽然也支持 powerline font），显示效果如下：
+比如主题 [powerlevel 10 k/powerlevel 10 k]( https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fromkatv%2Fpowerlevel10k%23oh-my-zsh " https://github.com/romkatv/powerlevel10k#oh-my-zsh" )，就推荐使用 Nerd font（虽然也支持 powerline font），显示效果如下：
 
 ![](https://sonder.vitah.me/blog/2024/e986a5bfdb98f67368ae507f20a0c158.webp)
 
 Nerd font 对 50 多款编程字体打了 patch（具体请参考 [这里]( https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fryanoasis%2Fnerd-fonts " https://github.com/ryanoasis/nerd-fonts" )，和 Powerline fonts 类似，也会在 patch 后，对名字做一下修改，比如 `Source Code Font` 会修改为 `Sauce Code Nerd Font` (Sauce Code 并非 typo，故意为之)。
 
-安装完之后，也需要修改对应客户端的字体（比如 iTerm/Terminal.app）后，各种主题的效果才会生效。
+安装完之后，也需要修改对应客户端的字体（比如 iTerm/Terminal. app）后，各种主题的效果才会生效。
 
 - Powerline fonts 或者 Nerd fonts 这些字体集，他们对已有的一些 (编程) 字体打了 patch，新增一些 icon 字符。
 - Nerd fonts 是 Powerline fonts 的超集，建议直接使用 Nerd font 就好了
@@ -88,7 +88,7 @@ alias rm="trash
 
 ### 主题优化
 
-#### Zsh 主题 powerlevel 10k
+#### Zsh 主题 powerlevel 10 k
 
 Zshrc 代码：
 
