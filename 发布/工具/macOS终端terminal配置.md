@@ -45,27 +45,27 @@ Nerd font 的原理和 Powerline fonts 是一样的，也是针对已有的字�
 
 Nerd font 对 50 多款编程字体打了 patch（具体请参考 [这里]( https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fryanoasis%2Fnerd-fonts " https://github.com/ryanoasis/nerd-fonts" )，和 Powerline fonts 类似，也会在 patch 后，对名字做一下修改，比如 `Source Code Font` 会修改为 `Sauce Code Nerd Font` (Sauce Code 并非 typo，故意为之)。
 
-安装完之后，也需要修改对应客户端的字体（比如 iTerm/Terminal. app）后，各种主题的效果才会生效。
+安装完之后，也需要修改对应客户端的字体（比如 iTerm/Terminal.app）后，各种主题的效果才会生效。
 
 - Powerline fonts 或者 Nerd fonts 这些字体集，他们对已有的一些 (编程) 字体打了 patch，新增一些 icon 字符。
 - Nerd fonts 是 Powerline fonts 的超集，建议直接使用 Nerd font 就好了
 
 ## Terminal 主题美化
 
-下载主题美化 Terminal，下载地址：[https://github.com/mbadolato/iTerm2-Color-Schemes](https://github.com/mbadolato/iTerm2-Color-Schemes)
+下载主题美化 `Terminal`，下载地址：[https://github.com/mbadolato/iTerm2-Color-Schemes](https://github.com/mbadolato/iTerm2-Color-Schemes)
 
-下载到本地后，打开 Terminal，导入所选主题即可，如图所示：
+下载到本地后，打开 `Terminal`，导入所选主题即可，如图所示：
 
 ![Terminal主题](https://sonder.vitah.me/blog/2024/76c6585012ba59dd506b94482c5889ca.webp)
 
-这里导入主题 OneHalfDark，效果如下：
+这里导入主题 `OneHalfDark` ，效果如下：
 
 ![OneHalfDark主题效果](https://sonder.vitah.me/blog/2024/55b0612a43c4a99e84fe48c5893c4339.webp)
 
 ## Zsh 配置
 
 主题美化后，我们需要安装一下插件来优化 zsh 操作。
-首先安装 zinit，用它来管理 zsh 插件，关于 zinit 的介绍网上很多，主要特点是快并且易于配置，一个 .zshrc 文件即可拷贝全部配置。参考链接：
+首先安装 `zinit` ，用它来管理 zsh 插件，关于 zinit 的介绍网上很多，主要特点是快并且易于配置，一个 `.zshrc ` 文件即可拷贝全部配置。参考链接：
 
 - [使用 zinit 管理 zsh 插件 完美代替 Antigen](https://einverne.github.io/post/2020/10/use-zinit-to-manage-zsh-plugins.html)
 - [加速你的 zsh —— 最强 zsh 插件管理器 zplugin/zinit 教程](https://www.aloxaf.com/2019/11/zplugin_tutorial/)
@@ -90,7 +90,7 @@ alias rm="trash
 
 #### Zsh 主题 powerlevel 10 k
 
-Zshrc 代码：
+zshrc 配置代码：
 
 ```shell
 # p10k主题
@@ -98,7 +98,7 @@ zinit ice depth"1"
 zinit light romkatv/powerlevel10k
 ```
 
-安装完成后，终端输入 `p10k configure` 来自定义 p 10 k 主题配置。
+安装完成后，终端输入 `p10k configure` 来自定义 p10k 主题配置。
 
 参考链接：[https://github.com/romkatv/powerlevel10k](https://github.com/romkatv/powerlevel10k)
 
