@@ -9,7 +9,7 @@ desc: 解析了MySQL中EXPLAIN命令的执行结果及其各个字段的含义�
 featuredImage: https://sonder.vitah.me/featured/28aa73e53cd54d7e0edec1893c32a5f2.webp
 ---
 
-## 示例表和数据SQL
+## 示例表和数据 SQL
 
 ```sql
 DROP TABLE IF EXISTS `actor`;
@@ -60,7 +60,7 @@ VALUES (1, 1, 1),
        (3, 2, 1);
 ```
 
-## id列
+## id 列
 
 ```sql
 explain select * from film where id = 1;
@@ -87,7 +87,7 @@ explain select * from film where id = 1;
 
 其中，`id` 的编号就是 `select` 的序列号，有几个 `select` 就有几个 `id`，并且 id 的顺序是按 `select` 出现的顺序增长的，*`id` 越大执行优先级越高，`id` 相同从上往下执行，`id` 为 `NULL` 最后执行*。
 
-## select_type列
+## select_type 列
 
 `select_type` 表示对应行是简单还是复杂的查询。
 
@@ -124,7 +124,7 @@ WHERE id = 1;
 ### primary, subquery, derived
 
 - `primary`，复杂查询中最外层的 `select`
-- `subquery`，包含在 `select` 中的子查询(不在 `from` 子句中)
+- `subquery`，包含在 `select` 中的子查询 (不在 `from` 子句中)
 - `derived`，包含在 `from` 子句中的子查询。Mysql 会将结果存放在一个临时表中，也称为派生表。
 
 用下面这个例子来了解 `primary`、`subquery` 和 `derived` 类型
@@ -184,7 +184,7 @@ FROM (SELECT * FROM film WHERE id = 1) der;
 
 ```
 
-其中，可以看到 id 最大值为3，表示有3个 `select` 语句，`id=3` 的查询对应的子查询是 `(select * from film where id = 1)` 部分，`id=2` 对应的是 `(select 1 from actor where id = 1)` 语句，`id=1` 则是最外层的`select`。
+其中，可以看到 id 最大值为 3，表示有 3 个 `select` 语句，`id=3` 的查询对应的子查询是 `(select * from film where id = 1)` 部分，`id=2` 对应的是 `(select 1 from actor where id = 1)` 语句，`id=1` 则是最外层的 `select`。
 
 ### union
 
@@ -230,20 +230,20 @@ SELECT 1;
 ]
 ```
 
-## table列
+## table 列
 
 这一列表示 `explain` 的一行正在访问哪个表。它可以是下面值中的一个
 
-- `<union M,N>` 这一行引用了ID值为M和N的表的联合。M 和 N 表示 `union` 的 `select` 行的 `id`。
-- `<deriven N>` 这一行引用了ID值为N的表所派生的表。派生的表可能是一个结果集，比如，FROM 子句中的子查询，表示当前查询依赖 `id=N` 的查询，于是先执行 `id=N` 的查询。
-- `subquery N` 这一行引用了ID值为N的物化字查询的结果。参考：[https://dev.mysql.com/doc/refman/5.7/en/subquery-materialization.html](https://dev.mysql.com/doc/refman/5.7/en/subquery-materialization.html)
+- `<union M,N>` 这一行引用了 ID 值为 M 和 N 的表的联合。M 和 N 表示 `union` 的 `select` 行的 `id`。
+- `<deriven N>` 这一行引用了 ID 值为 N 的表所派生的表。派生的表可能是一个结果集，比如，FROM 子句中的子查询，表示当前查询依赖 `id=N` 的查询，于是先执行 `id=N` 的查询。
+- `subquery N` 这一行引用了 ID 值为 N 的物化字查询的结果。参考：[https://dev.mysql.com/doc/refman/5.7/en/subquery-materialization.html](https://dev.mysql.com/doc/refman/5.7/en/subquery-materialization.html)
 
-## type列
+## type 列
 
 表示关联类型或者访问类型，即 Mysql 决定如何查找表中的行，查找数据行记录的大概范围。
 依次从最优到最差分别为：`system` > `const` > `eq_ref` > `ref` > `range` > `index` > `ALL`，一般来说，要**保证查询达到 range 级别，最好达到 ref**。
 
-### NULL值
+### NULL 值
 
 mysql 能够在优化阶段分解查询语句，在执行阶段不需要访问表或者索引。例如：在索引列中选取最小值，可以单独查找索引来完成，不需要在执行时访问表。
 
@@ -274,7 +274,7 @@ FROM film;
 
 ### const, system
 
-mysql 能对查询对某部分进行优化并将其转为一个常量(可以看 show warnings 的结果)。用于 `primary key` 或 `unique key` 的所有列与常数比较时，所以表最多有一个匹配行，读取1次，速度比较快。`system` 是 `const` 的特例，**表里只有一条元组匹配时为** `system**`。
+mysql 能对查询对某部分进行优化并将其转为一个常量 (可以看 show warnings 的结果)。用于 `primary key` 或 `unique key` 的所有列与常数比较时，所以表最多有一个匹配行，读取 1 次，速度比较快。`system` 是 `const` 的特例，**表里只有一条元组匹配时为** `system**`。
 
 ```sql
 SET SESSION optimizer_switch = 'derived_merge=off';
@@ -317,7 +317,7 @@ SET SESSION optimizer_switch = 'derived_merge=on';
 ]
 ```
 
-可以看到，`id=2` 的语句对应 (`select * from film where id = 1`) 查询，此时比较主键是否相等，类型为 `const`。`id=1` 的查询 临时表中只有一条数据，`const` 转为 `system`。
+可以看到，`id=2` 的语句对应 (`select * from film where id = 1`) 查询，此时比较主键是否相等，类型为 `const`。`id=1` 的查询临时表中只有一条数据，`const` 转为 `system`。
 
 ### eq_ref
 
@@ -439,7 +439,7 @@ FROM film
 
 ### range
 
-范围扫描通常出现在 `in()`, `between`, `>`, `<`, `≥` 等操作中，使用一个索引来检索给定范围的行
+范围扫描通常出现在 `in ()`, `between`, `>`, `<`, `≥` 等操作中，使用一个索引来检索给定范围的行
 
 ```sql
 EXPLAIN
@@ -525,22 +525,22 @@ FROM actor;
 ]
 ```
 
-## possible_keys列
+## possible_keys 列
 
 这一列显示查询可能使用哪些索引来查找。
 `explain` 时可能 **出现** `possible_keys` 有列，而 `key` 显示 `NULL` 的情况，是因为表中数据不多，`mysql` 认为索引对此查询帮助不大，选择了全表查询。
 如果该列是 `NULL`，则没有相关的索引。在这种情况下，可以通过检查 `where` 子句看是否可以创造一个适当的索引来提高查询性能，然后用 `explain` 查询效果。
 
-## key列
+## key 列
 
 显示 `mysql` 实际采用哪个索引来优化对该表的访问。
 如果没有使用索引，该列值是 `NULL`。如果想强制 `mysql` 使用或者忽视 `possible_keys` 列中的索引，可以使用 `force index`、`ignore index`。
 
-## 列key_len
+## 列 key_len
 
 显示了在索引里使用的字节数，通过这个值可以算出具体使用了索引中的哪些列。
 
-比如表 `film_actor` 的联合索引 `idx_film_actor_id` 由 `film_id` 和 `actor_id` 两个 `int` 列组成，并且每个 `int` 是4字节。通过结果中的 `ken_len=4` 可推断出查询使用列第一个列：`film_id` 列来执行索引查找。
+比如表 `film_actor` 的联合索引 `idx_film_actor_id` 由 `film_id` 和 `actor_id` 两个 `int` 列组成，并且每个 `int` 是 4 字节。通过结果中的 `ken_len=4` 可推断出查询使用列第一个列：`film_id` 列来执行索引查找。
 
 ```sql
 EXPLAIN
@@ -570,33 +570,33 @@ WHERE film_id = 2;
 
 `key_len` 的计算规则
 
-- 字符串，`char(n)` 和 `varchar(n)`，`n` 代表字符数，不是字节数，如果是 `utf-8`，一个数字或者字母占1字节，如果是汉字占3字节。`char(n)` 存汉字长度为 `3n` 字节，`varchar(n)` 存汉字长度为 `3n+2` 字节，需要额外2字节用来存储字符串长度。
+- 字符串，`char (n)` 和 `varchar (n)`，`n` 代表字符数，不是字节数，如果是 `utf-8`，一个数字或者字母占 1 字节，如果是汉字占 3 字节。`char (n)` 存汉字长度为 `3 n` 字节，`varchar (n)` 存汉字长度为 `3 n+2` 字节，需要额外 2 字节用来存储字符串长度。
 - 数值类型
-  - tinyint 1字节
-  - smallint 2字节
-  - int 4字节
-  - bigint 8字节
+  - tinyint 1 字节
+  - smallint 2 字节
+  - int 4 字节
+  - bigint 8 字节
 - 时间类型
-  - date 3字节
-  - timestamp 4字节
-  - datetime 8字节
-- 字段允许为 `NULL`，需要额外1字节记录是否为 `NULL`
+  - date 3 字节
+  - timestamp 4 字节
+  - datetime 8 字节
+- 字段允许为 `NULL`，需要额外 1 字节记录是否为 `NULL`
 
-**索引的最大长度是768字节，当字符串过长时，mysql 会做一个类似左前缀索引的处理，将前半部分的字符提取出来做索引。**
+**索引的最大长度是 768 字节，当字符串过长时，mysql 会做一个类似左前缀索引的处理，将前半部分的字符提取出来做索引。**
 
-## ref列
+## ref 列
 
-显示了在 `key` 列记录的索引中，表查找值所用到的列或常量，常见的有 `const`(常量)，字段名(例如 film.id)
+显示了在 `key` 列记录的索引中，表查找值所用到的列或常量，常见的有 `const`(常量)，字段名 (例如 film. id)
 
-## rows列
+## rows 列
 
 `mysql` 估计要读取并检测的行数，并不是结果集里面的行数，**只是一个估计值**。
 
-## filtered列
+## filtered 列
 
-表示返回结果的行数占需读取行数(列`rows`值)的百分比，`filtered` 列的值越大越好，`filtered` 列的值依赖于统计信息
+表示返回结果的行数占需读取行数 (列`rows`值) 的百分比，`filtered` 列的值越大越好，`filtered` 列的值依赖于统计信息
 
-## Extra列
+## Extra 列
 
 展示的是额外信息。常见的重要值如下：
 
@@ -724,7 +724,7 @@ WHERE film_id > 1;
 
 mysql 需要创建一张临时表来处理查询。出现这种情况一般需要进行优化，首先想到用索引来优化
 
-1. `actor.name` 没有索引，此时创建来临时表来 `distinct`
+1. `actor. name` 没有索引，此时创建来临时表来 `distinct`
 
 ```sql
 EXPLAIN
@@ -751,7 +751,7 @@ FROM actor;
 ]
 ```
 
-2. `film.name` 建立来 `idx_name` 索引，此时查询时 `extra` 是 `using index`，没有用临时表
+2. `film. name` 建立来 `idx_name` 索引，此时查询时 `extra` 是 `using index`，没有用临时表
 
 ```sql
 EXPLAIN
@@ -783,7 +783,7 @@ FROM film;
 将用外部排序而不是索引排序，数据较小时从内存排序，否则需要在磁盘完成排序。这种情况下一般也是要考虑用索引来优化。
 
 - 使用外部排序
-`actor.name`未创建索引，会浏览`actor`整个表，保存排序关键字`name`和对应的`id`，然后排序`name`并检索行记录。  
+`actor. name`未创建索引，会浏览`actor`整个表，保存排序关键字`name`和对应的`id`，然后排序`name`并检索行记录。  
 
 ```sql
 EXPLAIN
@@ -813,7 +813,7 @@ ORDER BY name;
 
 - 利用索引优化
 
-`film.name` 建立了 `idx_name` 索引，此时查询时 `extra` 是 `using index`。
+`film. name` 建立了 `idx_name` 索引，此时查询时 `extra` 是 `using index`。
 
 ```sql
 EXPLAIN
@@ -843,7 +843,7 @@ ORDER BY name;
 
 ### 6. Select tables optimized away
 
-使用某些聚合函数(比如 `max`、`min`)来访问存在索引的某个字段时
+使用某些聚合函数 (比如 `max`、`min`) 来访问存在索引的某个字段时
 
 ```sql
 EXPLAIN

@@ -144,10 +144,10 @@ WHERE name > 'zzz';
 ]
 ```
 
-可以看到，上述3种情况，MySQL 选择了不同的查询方案。
-mysql最终选择是否走索引或者一张表涉及多个索引最终选择哪个索引，我们可以用 trace 工具来一查究竟。
+可以看到，上述 3 种情况，MySQL 选择了不同的查询方案。
+mysql 最终选择是否走索引或者一张表涉及多个索引最终选择哪个索引，我们可以用 trace 工具来一查究竟。
 
-## trace介绍
+## trace 介绍
 
 ### 用法
 
@@ -161,7 +161,7 @@ SET SESSION optimizer_trace = "enabled=on",end_markers_in_json = ON;
 SET SESSION optimizer_trace = "enabled=off";
 ```
 
-使用trace工具查看语句：
+使用 trace 工具查看语句：
 
 ```sql
 SELECT *

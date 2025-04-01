@@ -236,7 +236,7 @@ WHERE name IS NULL
 }
 ```
 
-### 7. Like 以通配符开头 ('$abc...')索引会失效
+### 7. Like 以通配符开头 ('$abc...') 索引会失效
 
 ```sql
 EXPLAIN SELECT * FROM employees
@@ -440,7 +440,7 @@ Where 与 order by 出现索引设计冲突时，到底是根据 where 去设计
 
 ## 索引使用总结
 
-假设索引 `index(a,b,c)`
+假设索引 `index (a, b, c)`
 
 | where 语句 | 索引是否被使用 |
 | --- | --- |
