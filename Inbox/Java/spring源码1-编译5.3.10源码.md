@@ -20,7 +20,7 @@ Github源码地址：[https://github.com/spring-projects/spring-framework/tree/v
 
 ## 编译
 
-跳转到源代码目录，执行 `gradle`命令：
+跳转到源代码目录，执行 `gradle` 命令：
 
 ```shell
 cd spring-5.3.10-analyse/
@@ -197,7 +197,7 @@ A build scan was not published as you have not authenticated with server 'ge.spr
 再次执行结果如下：
 ![image.png](https://vitahlin.oss-cn-shanghai.aliyuncs.com/images/blog/2022/07/202301051546795.png)
 
-执行正常，接下来就可以调试spring源代码了。
+执行正常，接下来就可以调试 `Spring` 源代码了。
 
 ## 参考
 - https://blog.csdn.net/weixin_43405771/article/details/106313378
