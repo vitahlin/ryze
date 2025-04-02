@@ -5,7 +5,7 @@ categories:
   - Database
 tags:
   - MySQL
-featuredImage: https://sonder.vitah.me/ryze/62008f9dcf20b813ec036e808a1502ed.webp
+featuredImage: https://sonder.vitah.me/ryze/c74490313d2e2eabe771b29a44c53409.webp
 desc: 在 MySQL 中，索引的选择和使用直接影响查询的执行成本。本文将详细介绍如何计算索引查询的代价，包括范围区间数量、回表次数、索引选择、排序代价、扫描行数等关键因素。通过 EXPLAIN 和 TRACE 命令，我们可以深入分析 SQL 查询的执行过程，理解 MySQL 优化器的决策逻辑，并针对索引选择、查询优化提供实用的优化策略，帮助开发者提升数据库性能。
 ---
 
