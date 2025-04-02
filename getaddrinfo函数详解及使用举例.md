@@ -1,11 +1,14 @@
 ---
-title: getaddrinfo函数
-slug: 
-categories: 
-tags: 
-featuredImage: 
-desc: 
-draft: true
+title: getaddrinfo函数详解及使用举例
+slug: getaddrinfo-introduction-and-usage-examples
+categories:
+  - Lang
+tags:
+  - C
+  - 网络
+featuredImage: https://sonder.vitah.me/ryze/01e82c8384b61e4ea88e9ec75ac23ad2.webp
+desc: getaddrinfo 是 C 语言中用于解析主机名和服务信息的重要函数，它提供了一种统一的方式来获取 IPv4 和 IPv6 地址信息，广泛用于网络编程。本文将详细介绍 getaddrinfo 的参数、返回值以及常见的错误处理，并提供完整的示例代码，帮助读者理解如何正确使用 getaddrinfo 进行地址解析和套接字创建。
+draft: false
 ---
 
 ## 函数介绍
