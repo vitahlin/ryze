@@ -178,6 +178,7 @@ int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
 ### close 函数
 
 ```c
+#include <unistd.h>
 int close(int sockfd); 
 ```
 
