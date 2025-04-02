@@ -5,7 +5,7 @@ categories:
   - System Programing
 tags:
   - 网络
-featuredImage: https://sonder.vitah.me/ryze/9641cd3920b7e80dc196f5a99f63b35f.webp
+featuredImage: https://sonder.vitah.me/ryze/71af91dc6756d8bd3e8cbe23a296183e.webp
 desc: 在这篇博客中，我们将对套接字（Socket）进行基本介绍。套接字是网络编程中的核心概念，它为不同计算机之间的数据交换提供了一种机制。我们将探讨套接字的定义、作用以及常见的套接字类型（如TCP和UDP套接字），并简要介绍如何使用套接字进行网络通信。通过本篇博客，您将对如何使用套接字进行数据传输、如何创建、绑定和监听套接字等基本操作有一个清晰的理解，并为进一步的网络编程打下基础。
 draft: false
 ---
