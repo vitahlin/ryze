@@ -5,7 +5,7 @@ categories:
   - Lang
 tags:
   - Java
-featuredImage: https://sonder.vitah.me/ryze/87f5a544b08f916b0c5d317f6670ebf8.webp
+featuredImage: https://sonder.vitah.me/ryze/71b535771df3936045f62df02ed50c76.webp
 desc: 本文介绍了如何使用com.ibm.icu库来推断文件的编码
 draft: false
 ---
