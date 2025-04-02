@@ -76,10 +76,10 @@ hints.ai_flags = AI_PASSIVE; // 对于服务器，绑定到任意可用地址
 
 ### AI_PASSIVE 在 getaddrinfo 中的作用
 
-`getaddrinfo()` 是一个用于解析地址的函数，它通常用来为客户端或服务器选择合适的地址来进行连接或绑定。如果你是服务器端程序，通常会希望它能绑定到所有可用的网络接口，处理来自任何网络接口的请求。这时，你可以调用 `getaddrinfo()` 并传递 `AI_PASSIVE` 标志。这样，如果没有指定特定的地址（如在 bindaddr 参数为空或 NULL 的情况下），函数会返回适合绑定到所有可用接口的地址。
+`getaddrinfo()` 是一个用于解析地址的函数，它通常用来为客户端或服务器选择合适的地址来进行连接或绑定。如果你是服务器端程序，通常会希望它能绑定到所有可用的网络接口，处理来自任何网络接口的请求。这时，你可以调用 `getaddrinfo()` 并传递 `AI_PASSIVE` 标志。这样，如果没有指定特定的地址（如在 `bindaddr` 参数为空或 NULL 的情况下），函数会返回适合绑定到所有可用接口的地址。
 
 **AI_PASSIVE 的作用：**
-- **没有指定地址时**：如果 `bindaddr` 参数为空或 NULL，`AI_PASSIVE` 会导致 `getaddrinfo()` 返回一个适用于绑定到所有可用网络接口的地址。对 IPv 4 地址来说，就是 `INADDR_ANY`（表示可以绑定到所有可用的网络接口，通常是 0.0.0.0）。对 IPv 6 地址来说，就是 `IN6ADDR_ANY_INIT`（通常表示 ::）。
+- **没有指定地址时**：如果 `bindaddr` 参数为空或 NULL，`AI_PASSIVE` 会导致 `getaddrinfo()` 返回一个适用于绑定到所有可用网络接口的地址。对 IPv4 地址来说，就是 `INADDR_ANY`（表示可以绑定到所有可用的网络接口，通常是 0.0.0.0）。对 IPv6 地址来说，就是 `IN6ADDR_ANY_INIT`（通常表示 ::）。
 - **已经指定了地址时**：如果 `bindaddr` 已经指定了某个特定的地址，`AI_PASSIVE` 标志不会有任何效果。它只是作为一个提示，表示如果没有明确指定地址，应该选择一个通用的地址。
 
 示例代码：
@@ -101,7 +101,7 @@ int sockfd = socket(servinfo->ai_family, servinfo->ai_socktype, servinfo->ai_pro
 bind(sockfd, servinfo->ai_addr, servinfo->ai_addrlen);
 ```
 
-Redis 中对 getaddrinfo 的使用：
+我们也可以学习下 Redis (6.2.14) 中对 `getaddrinfo` 函数的使用，函数定义在文件 `src/anet.c` 中：
 ```c
 static int _anetTcpServer(char *err, int port, char *bindaddr, int af, int backlog)  
 {  
