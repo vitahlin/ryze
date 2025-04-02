@@ -32,7 +32,7 @@ int getaddrinfo( const char *hostname, const char *service, const struct addrinf
     - 端口号（如 “80” 或 “443”）。
     - 如果为 NULL，则表示不需要解析端口。
 - `hints`：一个指向 `struct addrinfo` 的指针，用于提供给 `getaddrinfo` 解析的提示（例如是否使用 IPv 4 或 IPv 6，是否使用流式套接字等）。可以根据需要进行设置，否则设置为全零结构，表示不限制。
-- `result`：一个指向 `struct addrinfo *` 的指针，用于存储解析结果。`getaddrinfo()` 会将返回的地址信息**以链表的形式存储**在这个指针指向的区域。每个链表节点包含一个网络地址（例如 `sockaddr_in` 或 `sockaddr_in6`）。
+- `result`：一个指向 `struct addrinfo *` 的指针，用于存储解析结果。`getaddrinfo()` 会将返回的地址信息**以链表的形式存储**在这个指针指向的区域，每个链表节点包含一个网络地址（例如 `sockaddr_in` 或 `sockaddr_in6`）。
 
 返回值
 - 成功时，返回 0，并且 `result` 会指向链表的第一个元素（存储了地址信息）；
@@ -142,10 +142,16 @@ end:
     return s;  
 }
 ```
+`bindaddr` 是 Redis 配置的绑定地址。
+- `*` 代表所有 IPv4 地址，转换为 NULL 以监听 `0.0.0.0` 。 
+- `::*` 代表所有 IPv6 地址，转换为 NULL 以监听 `::` （即所有 IPv6 地址）
 
-示例代码
+后续遍历 `getaddrinfo` 返回的 `addrinfo` 链表，尝试创建 `socket`，如果创建失败，继续尝试下一个地址。
 
-根据主机名获取地址信息：
+## 示例代码
+
+### 1. 根据主机名获取地址信息 
+
 ```c
 #include <stdio.h>  
 #include <netdb.h>  
@@ -199,3 +205,79 @@ IP address:157.148.69.186
 IP address:157.148.69.151
 ```
 
+### 2. 服务器程序获取可绑定端口和地址
+
+```c
+#include <stdio.h>
+#include <netdb.h>
+#include <string.h>
+#include <arpa/inet.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <string.h>
+#include <fcntl.h>
+#include <time.h>
+#include <ctype.h>
+#include <unistd.h>
+#include <errno.h>
+#include <sys/wait.h>
+#include <signal.h>
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <sys/stat.h>
+#include <netdb.h>
+#include <sys/socket.h>
+
+
+void getCanBindAddressInTcpServer() {
+    struct addrinfo hints, *res;
+    int sockfd;
+
+    // 1. 清空 hints 并设置参数
+    memset(&hints, 0, sizeof hints);
+    hints.ai_family = AF_UNSPEC;    // 支持 IPv4 或 IPv6
+    hints.ai_socktype = SOCK_STREAM; // 选择 TCP 连接
+    hints.ai_flags = AI_PASSIVE;     // 监听所有可用 IP (0.0.0.0)
+
+    // 2. 获取可用的地址
+    int status = getaddrinfo(NULL, "8080", &hints, &res);
+    if (status != 0) {
+        fprintf(stderr, "getaddrinfo error: %s\n", gai_strerror(status));
+        return;
+    }
+
+    // 3. 创建 socket
+    sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
+    if (sockfd == -1) {
+        perror("socket error");
+        return;
+    }
+
+    // 4. 绑定端口
+    if (bind(sockfd, res->ai_addr, res->ai_addrlen) == -1) {
+        perror("bind error");
+        close(sockfd);
+        return;
+    }
+
+    printf("Server is running on port 8080...\n");
+
+    // 5. 释放资源
+    freeaddrinfo(res);
+}
+
+int main() {
+    printf("\ngetCanBindAddressInTcpServer:\n");
+    getCanBindAddressInTcpServer();
+    return 0;
+}
+
+```
+
+运行结果：
+```shell
+getCanBindAddressInTcpServer:
+Server is running on port 8080...
+```
