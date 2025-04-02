@@ -27,7 +27,7 @@ int getaddrinfo( const char *hostname, const char *service, const struct addrinf
 
 参数说明：
 - `hostname`: 一个主机名或者地址串 (IPv 4 的点分十进制串或者 IPv 6 的 16 进制串)。
-    - 主机名例如 "www.baidu.com"
+    - 主机名例如 `www.vitahlin.com` 
     - IP 地址（例如 “192.168.1.1” 或 “2001: db 8:: 1”）
     - 如果为 NULL，则 `getaddrinfo` 会返回本地地址（使用 `INADDR_ANY` 或 `IN6ADDR_ANY_INIT`）。
 - `service`：服务名可以是十进制的端口号，也可以是已定义的服务名称，如 ftp、http 等。
