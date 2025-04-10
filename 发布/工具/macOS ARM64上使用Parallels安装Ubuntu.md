@@ -112,7 +112,8 @@ vitah@ubu2404:/media$ ls
 vitah@ubu2404:/media$ sudo mkdir cdrom
 [sudo] password for vitah: 
 
-vitah@ubu2404:/media$ sudo mount -o exec /dev/cdrom /media/cdrom
+
+vitah@ubu2404:/$ sudo mount -o exec /dev/cdrom /media/cdrom
 mount: /media/cdrom: WARNING: source write-protected, mounted read-only.
 
 ```
@@ -126,7 +127,7 @@ cdrom
 vitah@ubu2404:/media$ cd cdrom
 vitah@ubu2404:/media/cdrom$ ls
 install  install-gui  installer  kmods  tools  version
-vitah@ubuntu-vm:/media/cdrom$ sudo ./install
+vitah@ubuntu-vm:/media/cdrom$ sudo ./install-gui
 Started installation of Parallels Guest Tools version'20.2.0.55872'
 ```
 
